@@ -55,21 +55,7 @@ import { MenuModule } from 'primeng/menu';
                 </span>
             </li>
         </ul>
-        <span class="block text-muted-color font-medium mb-4">LAST WEEK</span>
-        <ul class="p-0 m-0 list-none">
-            <li class="flex items-center py-2 border-b border-surface">
-                <div class="w-12 h-12 flex items-center justify-center bg-green-100 dark:bg-green-400/10 rounded-full mr-4 shrink-0">
-                    <i class="pi pi-arrow-up text-xl! text-green-500"></i>
-                </div>
-                <span class="text-surface-900 dark:text-surface-0 leading-normal">Your revenue has increased by <span class="text-primary font-bold">%25</span>.</span>
-            </li>
-            <li class="flex items-center py-2 border-b border-surface">
-                <div class="w-12 h-12 flex items-center justify-center bg-purple-100 dark:bg-purple-400/10 rounded-full mr-4 shrink-0">
-                    <i class="pi pi-heart text-xl! text-purple-500"></i>
-                </div>
-                <span class="text-surface-900 dark:text-surface-0 leading-normal"><span class="text-primary font-bold">12</span> users have added your products to their wishlist.</span>
-            </li>
-        </ul>
+      
     </div>`
 })
 export class NotificationsWidget {
