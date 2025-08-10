@@ -32,7 +32,7 @@
                             }
                         ],
                         "styles": [
-                            "src/assets/styles.scss"
+                            "src/app/assets/styles.scss"
                         ],
                         "scripts": []
                     },
@@ -79,7 +79,7 @@
                             }
                         ],
                         "styles": [
-                            "src/assets/styles.scss"
+                            "src/app/assets/styles.scss"
                         ],
                         "scripts": []
                     }
