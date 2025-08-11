@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ReservationDto } from '../models/reservation.dto';
 import { PropertyDto } from '../models/property.dto';
 import { UserDto } from '../models/user.dto';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
    
 
 const mockProperties: PropertyDto[] = [
@@ -16,6 +16,8 @@ const mockProperties: PropertyDto[] = [
       fullName: 'Carlos Martínez',
       email: 'carlos@example.com',
       isHost: true,
+      phoneNumber: '',
+      avatarUrl: '',
       createdAt: '2024-01-10T09:00:00Z'
     },
     location: {
@@ -101,12 +103,13 @@ export const mockReservations: ReservationDto[] = [
   }
 
 ];
+
 @Injectable()
 export class ReservationsService {
-  
+    private _reservations = new BehaviorSubject<ReservationDto[]>(mockReservations); 
     
-    getReservationsData(): ReservationDto[] {
-        return mockReservations;
+    getReservationsData(): Observable<ReservationDto[]> {
+        return this._reservations.asObservable();
     }
  
  
@@ -116,5 +119,18 @@ export class ReservationsService {
     getReservations() {
         return Promise.resolve(this.getReservationsData());
     }
- 
+
+    getReservationById(id: string):Observable<ReservationDto | undefined>{
+        const reservation = this._reservations.value;
+        return of(reservation.find(r => r.id === id));
+    }
+    updateReservation(updated: ReservationDto): Observable<ReservationDto> {
+        const arr = [...this._reservations.value];
+        const idx = arr.findIndex(r => r.id === updated.id);
+        if (idx >= 0) {
+        arr[idx] = { ...updated, updatedAt: new Date().toISOString() };
+        this._reservations.next(arr);
+        }
+        return of(updated);
+    }
 }

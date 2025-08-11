@@ -1,88 +1,82 @@
 <div class="card mb-8!">
 
   <div class="flex items-center justify-between mb-4">
-  <div class="font-semibold text-xl">Gestion de Reservas</div>
-<div>
-                <button pButton type="button" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-text p-button-plain" (click)="menu.toggle($event)"></button>
-                <p-menu #menu [popup]="true" [model]="items"></p-menu>
-            </div>
+    <div class="font-semibold text-xl">Gestion de Reservas</div>
+    <div>
+      <button pButton type="button" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-text p-button-plain"
+        (click)="menu.toggle($event)"></button>
+      <p-menu #menu [popup]="true" [model]="items"></p-menu>
+    </div>
   </div>
 
-<p-table 
-  [value]="reservations" 
-  [paginator]="true" 
-  [rows]="5" 
-  responsiveLayout="scroll"
-  sortMode="multiple">
+  <p-table [value]="reservations" [paginator]="true" [rows]="5" responsiveLayout="scroll" sortMode="multiple">
 
-  <!-- ENCABEZADO -->
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Propiedad</th>
-      <th>Huésped</th>
-      <th pSortableColumn="checkInDate">Check-In <p-sortIcon field="checkInDate"></p-sortIcon></th>
-      <th pSortableColumn="checkOutDate">Check-Out <p-sortIcon field="checkOutDate"></p-sortIcon></th>
-      <th pSortableColumn="totalPrice">Total <p-sortIcon field="totalPrice"></p-sortIcon></th>
-      <th pSortableColumn="status">Estatus <p-sortIcon field="status"></p-sortIcon></th>
-      <th>Acciones</th>
-    </tr>
-  </ng-template>
+    <!-- ENCABEZADO -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Propiedad</th>
+        <th>Huésped</th>
+        <th pSortableColumn="checkInDate">Check-In <p-sortIcon field="checkInDate"></p-sortIcon></th>
+        <th pSortableColumn="checkOutDate">Check-Out <p-sortIcon field="checkOutDate"></p-sortIcon></th>
+        <th pSortableColumn="totalPrice">Total <p-sortIcon field="totalPrice"></p-sortIcon></th>
+        <th pSortableColumn="status">Estatus <p-sortIcon field="status"></p-sortIcon></th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
 
-  <!-- CUERPO -->
-  <ng-template pTemplate="body" let-res>
-    <tr>
-      <!-- Foto + Nombre propiedad -->
-      <td>
-        <div class="flex items-center">
-          <img 
-            [src]="res.property.photos[0]?.url" 
-            alt="{{ res.property.title }}" 
-            class="w-12 h-12 rounded mr-3 object-cover">
-          <span class="font-medium">{{ res.property.title }}</span>
-        </div>
-      </td>
+    <!-- CUERPO -->
+    <ng-template pTemplate="body" let-res>
+      <tr>
+        <!-- Foto + Nombre propiedad -->
+        <td>
+          <div class="flex items-center">
+            <img [src]="res.property.photos[0]?.url" alt="{{ res.property.title }}"
+              class="w-12 h-12 rounded mr-3 object-cover">
+            <span class="font-medium">{{ res.property.title }}</span>
+          </div>
+        </td>
 
-      <!-- Huésped -->
-      <td>
-        <div class="flex items-center">
-          <img 
-            *ngIf="res.guest.avatarUrl" 
-            [src]="res.guest.avatarUrl" 
-            alt="{{ res.guest.fullName }}" 
-            class="w-8 h-8 rounded-full mr-2 object-cover">
-          <span>{{ res.guest.fullName }}</span>
-        </div>
-      </td>
+        <!-- Huésped -->
+        <td>
+          <div class="flex items-center">
+            <img *ngIf="res.guest.avatarUrl" [src]="res.guest.avatarUrl" alt="{{ res.guest.fullName }}"
+              class="w-8 h-8 rounded-full mr-2 object-cover">
+            <span>{{ res.guest.fullName }}</span>
+          </div>
+        </td>
 
-      <!-- Fechas -->
-      <td>{{ res.checkInDate | date:'dd/MM/yyyy' }}</td>
-      <td>{{ res.checkOutDate | date:'dd/MM/yyyy' }}</td>
+        <!-- Fechas -->
+        <td>{{ res.checkInDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ res.checkOutDate | date:'dd/MM/yyyy' }}</td>
 
-      <!-- Precio -->
-      <td class="font-bold text-green-600">
-        {{ res.totalPrice | currency:'MXN':'symbol' }}
-      </td>
+        <!-- Precio -->
+        <td class="font-bold text-green-600">
+          {{ res.totalPrice | currency:'MXN':'symbol' }}
+        </td>
 
-      <!-- Estatus -->
-      <td>
-        <p-tag 
-          [value]="res.status" 
-          [severity]="
+        <!-- Estatus -->
+        <td>
+          <p-tag [value]="res.status" [severity]="
             res.status === 'Confirmada' ? 'success' :
             res.status === 'Pendiente' ? 'warning' :
             'danger'
           ">
-        </p-tag>
-      </td>
+          </p-tag>
+        </td>
 
-      <!-- Acciones -->
-      <td>
-        <button pButton icon="pi pi-eye" class="p-button-rounded p-button-text p-button-info mr-1" pTooltip="Ver"></button>
-        <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-warning mr-1" pTooltip="Editar"></button>
-       </td>
-    </tr>
-  </ng-template>
+        <!-- Acciones -->
+        <td>
+          <button pButton icon="pi pi-eye" class="p-button-text p-button-rounded p-button-info"
+            (click)="onView(res)"></button>
+          <button pButton icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-warning"
+            (click)="onEdit(res)"></button>
+        </td>
+      </tr>
+    </ng-template>
 
-</p-table>
+  </p-table>
 
 </div>
+
+<app-reservation-view #viewer>
+</app-reservation-view>
