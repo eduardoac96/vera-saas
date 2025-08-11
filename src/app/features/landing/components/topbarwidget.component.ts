@@ -26,7 +26,7 @@ import { AppFloatingConfigurator } from '../../../layout/component/app.floatingc
                     />
                 </g>
             </svg>
-            <span class="text-surface-900 dark:text-surface-0 font-medium text-2xl leading-normal mr-20">SAKAbbbI</span>
+            <span class="text-surface-900 dark:text-surface-0 font-medium text-2xl leading-normal mr-20">Vera</span>
         </a>
 
         <a pButton [text]="true" severity="secondary" [rounded]="true" pRipple class="lg:hidden!" pStyleClass="@next" enterFromClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true">

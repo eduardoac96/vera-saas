@@ -6,7 +6,7 @@ import { MenuModule } from 'primeng/menu';
     standalone: true,
     selector: 'reservation-notification-component',
     imports: [ButtonModule, MenuModule],
-    templateUrl: './reservations-notification-component.html' 
+    templateUrl: './notification-component.html' 
 })
 export class ReservationsNotificationComponent {
     items = [

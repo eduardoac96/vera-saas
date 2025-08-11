@@ -5,6 +5,6 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     selector: 'reservations-stats-component',
     imports: [CommonModule],
-    templateUrl: 'reservations-stats-component.html'
+    templateUrl: 'stats-component.html'
 })
 export class ReservationsStatsComponent {}

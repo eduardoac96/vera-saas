@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'; 
-import { ReservationsTableComponent } from './components/reservations-table-component';
-import { ReservationsNotificationComponent } from './components/reservations-notification-component';
- import { ReservationsStatsComponent } from './components/reservations-stats-component';
+import { ReservationsTableComponent } from './components/table-component';
+import { ReservationsNotificationComponent } from './components/notification-component';
+ import { ReservationsStatsComponent } from './components/stats-component';
 
 @Component({
     selector: 'app-dashboard',
