@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { ReservationDto } from '../models/reservation.dto';
 import { PropertyDto } from '../models/property.dto';
 import { UserDto } from '../models/user.dto';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { mockReviews, ReviewDto } from '../models/review.dto';
+import { mockNotifications, NotificationDto } from '../models/notification.dto';
    
 
 const mockProperties: PropertyDto[] = [
@@ -55,8 +57,7 @@ const mockGuests: UserDto[] = [
     createdAt: '2024-03-01T10:00:00Z'
   }
 ];
-
-export const mockReservations: ReservationDto[] = [
+ export const mockReservations: ReservationDto[] = [
   {
     id: 'res-001',
     property: mockProperties[0],
@@ -104,21 +105,58 @@ export const mockReservations: ReservationDto[] = [
 
 ];
 
+
+
 @Injectable()
 export class ReservationsService {
-    private _reservations = new BehaviorSubject<ReservationDto[]>(mockReservations); 
-    
-    getReservationsData(): Observable<ReservationDto[]> {
-        return this._reservations.asObservable();
-    }
- 
- 
- 
     constructor(private http: HttpClient) {}
+
+    private _reservations = new BehaviorSubject<ReservationDto[]>(mockReservations); 
+    private _reviews = new BehaviorSubject<ReviewDto[]>(mockReviews);
+    private _notifications = new BehaviorSubject<NotificationDto[]>(mockNotifications);
+
+    countReservations = this._reservations.pipe(
+        map(reservations => reservations.length)
+      );
+
+    countReservationsPerMonth = this._reservations.pipe(
+        map(reservations => reservations.length)
+      );
+
+    countClients = this._reservations.pipe(
+       map(reservations => {
+          const uniqueClients = new Set(reservations.map(r=> r.property?.host.id));
+          return uniqueClients.size;
+       })
+    )
+
+    countReviews =this._reviews.pipe(
+       map(reviews => reviews.length)
+    );
+
+    countPendingReviews = this._reviews.pipe(
+       map(reviews => reviews.length)
+    );
+
+    private getReservationsData(): Observable<ReservationDto[]> {
+        return this._reservations.asObservable();
+    } 
+    private getNotificationsData(): Observable<NotificationDto[]>{
+       return this._notifications.asObservable();
+    }
 
     getReservations() {
         return Promise.resolve(this.getReservationsData());
     }
+   
+
+    getNotifications() { 
+      return Promise.resolve(this.getNotificationsData());
+    }
+    
+    
+
+
 
     getReservationById(id: string):Observable<ReservationDto | undefined>{
         const reservation = this._reservations.value;
