@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
-import { NotificationsWidget } from './components/notificationswidget';
-import { StatsWidget } from './components/statswidget';
-import { RecentSalesWidget } from './components/recentsaleswidget';  
+import { Component } from '@angular/core'; 
+import { ReservationsTableComponent } from './components/reservations-table-component';
+import { ReservationsNotificationComponent } from './components/reservations-notification-component';
+ import { ReservationsStatsComponent } from './components/reservations-stats-component';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [StatsWidget, RecentSalesWidget,NotificationsWidget],
+    imports: [ReservationsTableComponent, ReservationsNotificationComponent, ReservationsStatsComponent],
     template: `
         <div class="grid grid-cols-12 gap-8">
-            <app-stats-widget class="contents" />
+            <reservations-stats-component class="contents" />
             <div class="col-span-12 xl:col-span-12">
-                <app-recent-sales-widget /> 
+               <app-reservations-component />
             </div>
             <div class="col-span-12 xl:col-span-12"> 
-                <app-notifications-widget />
+               <reservation-notification-component/>
             </div>
         </div>
     `
