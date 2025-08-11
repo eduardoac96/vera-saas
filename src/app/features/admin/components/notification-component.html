@@ -1,46 +1,51 @@
-<div class="card">
-        <div class="flex items-center justify-between mb-6">
-            <div class="font-semibold text-xl">Notificaciones</div>
-            <div>
-                <button pButton type="button" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-text p-button-plain" (click)="menu.toggle($event)"></button>
-                <p-menu #menu [popup]="true" [model]="items"></p-menu>
-            </div>
-        </div>
-
-        <span class="block text-muted-color font-medium mb-4">HOY</span>
-        <ul class="p-0 mx-0 mt-0 mb-6 list-none">
-            <li class="flex items-center py-2 border-b border-surface">
-                <div class="w-12 h-12 flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-full mr-4 shrink-0">
-                    <i class="pi pi-dollar text-xl! text-blue-500"></i>
-                </div>
-                <span class="text-surface-900 dark:text-surface-0 leading-normal"
-                    >Richard Jones
-                    <span class="text-surface-700 dark:text-surface-100">has purchased a blue t-shirt for <span class="text-primary font-bold">$79.00</span></span>
-                </span>
-            </li>
-           
-        </ul>
-
-        <span class="block text-muted-color font-medium mb-4">AYER</span>
-        <ul class="p-0 m-0 list-none mb-6">
-            <li class="flex items-center py-2 border-b border-surface">
-                <div class="w-12 h-12 flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-full mr-4 shrink-0">
-                    <i class="pi pi-dollar text-xl! text-blue-500"></i>
-                </div>
-                <span class="text-surface-900 dark:text-surface-0 leading-normal"
-                    >Keyser Wick
-                    <span class="text-surface-700 dark:text-surface-100">has purchased a black jacket for <span class="text-primary font-bold">$59.00</span></span>
-                </span>
-            </li>
-            <li class="flex items-center py-2 border-b border-surface">
-                <div class="w-12 h-12 flex items-center justify-center bg-pink-100 dark:bg-pink-400/10 rounded-full mr-4 shrink-0">
-                    <i class="pi pi-question text-xl! text-pink-500"></i>
-                </div>
-                <span class="text-surface-900 dark:text-surface-0 leading-normal"
-                    >Jane Davis
-                    <span class="text-surface-700 dark:text-surface-100">has posted a new questions about your product.</span>
-                </span>
-            </li>
-        </ul>
-      
+<div class="card" [ngClass]="{ 'p-0': mode === 'compact', 'p-4': mode === 'full' }">
+  @if(mode === 'full') {
+    <div class="flex items-center justify-between mb-6">
+      <div class="font-semibold text-xl">Notificaciones</div>
+      <div>
+        <button pButton type="button" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-text p-button-plain"
+          (click)="menu.toggle($event)"></button>
+        <p-menu #menu [popup]="true" [model]="items"></p-menu>
+      </div>
     </div>
+  }
+
+  @if(visibleNotifications.length === 0) {
+    <p class="text-center text-muted-color">No hay notificaciones</p>
+  } @else {
+    <ul class="p-0 mx-0 mt-0 list-none">
+      @for (notif of visibleNotifications; track notif.id) {
+        <li class="flex items-center py-3 border-b border-surface cursor-pointer hover:bg-surface-50 dark:hover:bg-surface-900">
+          <div class="w-10 h-10 flex items-center justify-center rounded-full mr-3 shrink-0"
+            [ngClass]="{
+              'bg-blue-100 dark:bg-blue-400/10': notif.type === 'reservation',
+              'bg-green-100 dark:bg-green-400/10': notif.type === 'review',
+              'bg-yellow-100 dark:bg-yellow-400/10': notif.type === 'message',
+              'bg-gray-100 dark:bg-gray-400/10': notif.type === 'system'
+            }">
+            <i class="pi"
+              [ngClass]="{
+                'pi-home text-blue-500': notif.type === 'reservation',
+                'pi-star text-green-500': notif.type === 'review',
+                'pi-envelope text-yellow-500': notif.type === 'message',
+                'pi-info-circle text-gray-500': notif.type === 'system'
+              }"></i>
+          </div>
+
+          <div class="flex flex-col text-sm">
+            <span class="font-medium">{{ notif.title }}</span>
+            <small class="text-muted-color">{{ notif.message }}</small>
+          </div>
+
+          @if(mode === 'full') {
+            <span class="ml-auto text-xs text-muted-color">
+              {{ notif.createdAt | date:'shortTime' }}
+            </span>
+          }
+        </li>
+      }
+    </ul>
+
+  
+  }
+</div>

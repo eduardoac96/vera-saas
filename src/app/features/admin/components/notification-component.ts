@@ -1,27 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu'; 
+import { mockNotifications, NotificationDto } from '../../../core/models/notification.dto';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
     standalone: true,
     selector: 'reservation-notification-component',
-    imports: [ButtonModule, MenuModule], 
+    imports: [ButtonModule, MenuModule, DatePipe, CommonModule], 
     templateUrl: './notification-component.html' 
 })
 export class ReservationsNotificationComponent {
     constructor(){}
-  
+    @Input() mode: 'full' | 'compact' = 'full';
 
-    items = [
-        { label: 'Add New', icon: 'pi pi-fw pi-plus', command: () => this.addNewNotification() },
-        { label: 'Remove', icon: 'pi pi-fw pi-trash',  command: () => this.removeNotifications() }
-    ];
 
-    addNewNotification(){
-        console.log("TODO");
-    }
-
-    removeNotifications(){
-        console.log("TODO REMOVE")
-    }
+  items = [
+    { label: 'Marcar todas como leídas', icon: 'pi pi-check', command: () => this.clearAll() }
+  ];
+  notifications: NotificationDto[] = mockNotifications;
+   
+  clearAll() {
+    this.notifications = [];
+  }
+   get visibleNotifications() {
+    return this.mode === 'compact' ? this.notifications.slice(0, 5) : this.notifications;
+  }
 }
