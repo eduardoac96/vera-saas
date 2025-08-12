@@ -20,12 +20,7 @@
         </div>
 
         <!-- Tag status -->
-        <div>
-          <!-- <p-tag
-              [value]="reservation.status"
-              [severity]="reservation.status === 'confirmed' ? 'success' : (reservation.status === 'pending' ? 'warning' : 'danger')">
-            </p-tag> -->
-        </div>
+
       </div>
 
       <div style="margin-top:12px;font-size:14px;color:#333;">
@@ -38,7 +33,7 @@
             reservation.totalPrice | currency:'USD':'symbol' }}</span></div>
         <div style="margin-top:8px;color:#666;font-size:13px;">Creada: {{ reservation.createdAt | date:'dd/MM/yyyy HH:mm' }} </div>
       </div>
- 
+
       <div style="display:flex;gap:8px;margin-top:14px;">
         <button pButton type="button" icon="pi pi-pencil" label="Editar" class="p-button-sm p-button-warning"
           (click)="openEdit(reservation)"></button>
@@ -50,87 +45,48 @@
 </p-dialog>
 
 <!-- EDIT DIALOG -->
-<p-dialog header="Editar reserva" [(visible)]="editDialog" [style]="{width: '680px'}" [modal]="true" [closable]="true">
-  <form [formGroup]="editForm" (ngSubmit)="saveEdit()" class="p-fluid"
-    style="display:grid;grid-template-columns: 1fr 1fr; gap:12px;">
-    <!-- Left column -->
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <label>Check-In</label>
-      <!-- <p-calendar formControlName="checkInDate" showIcon dateFormat="dd/mm/yy" [showTime]="false" inputId="checkIn"></p-calendar> -->
+<p-dialog header="Editar reserva" [(visible)]="editDialog" [style]="{width: '680px', height: '500'}" [modal]="true" [closable]="true">
+  <form [formGroup]="editForm" (ngSubmit)="saveEdit()" class="p-fluid responsive-grid"
+    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
 
-      <label>Check-Out</label>
-      <!-- <p-calendar formControlName="checkOutDate" showIcon dateFormat="dd/mm/yy" [showTime]="false" inputId="checkOut"></p-calendar> -->
+    <!-- Columna izquierda -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
 
-      <label>Total (USD)</label>
-      <!-- <p-inputNumber formControlName="totalPrice" [mode]="'currency'" currency="USD" [min]="0"></p-inputNumber> -->
+      <div>
+        <img [src]="reservation?.property?.photos?.[0]?.url || 'assets/img/placeholder-120x80.png'"
+          alt="{{ reservation?.property?.title || 'Propiedad' }}"
+          style="width:120px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #e6e6e6;" />
+      </div>
+
+
+      <div>
+        <h3 style="margin:0 0 6px 0;font-size:1.05rem;">{{ reservation?.property?.title || '—' }}</h3>
+        <div style="color:#6b6b6b;font-size:13px;">{{ reservation?.property?.location?.city || '—' }}, {{
+          reservation?.property?.location?.country || '—' }}</div>
+      </div>
+      <div style="margin-bottom:6px;"><strong>Huésped:</strong> {{ reservation?.guest?.fullName || '—' }}</div>
+
+
     </div>
 
-    <!-- Right column -->
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <label>Estatus</label>
-      <!-- <p-dropdown formControlName="status" [options]="statusOptions" optionLabel="label" optionValue="value" placeholder="Selecciona estatus"></p-dropdown> -->
+    <!-- Columna derecha -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <label>Check-In</label>
+      <p-datepicker formControlName="checkInDate" showIcon dateFormat="dd/mm/yy" inputId="checkIn"></p-datepicker>
 
-      <label>Huésped</label>
-      <input pInputText [value]="reservation?.guest?.fullName" disabled />
+      <label>Check-Out</label>
+      <p-datepicker formControlName="checkOutDate" showIcon dateFormat="dd/mm/yy" inputId="checkOut"></p-datepicker>
 
-      <label>Propiedad</label>
-      <input pInputText [value]="reservation?.property?.title" disabled />
-
-      <div style="margin-top:auto;display:flex;gap:8px;justify-content:flex-end;">
-        <button pButton type="button" label="Cancelar" class="p-button-text" (click)="editDialog = false"></button>
-        <button pButton type="submit" label="Guardar" [disabled]="editForm.invalid" class="p-button-success"></button>
-      </div>
+      <label>Total (USD)</label>
+      <p-inputnumber formControlName="totalPrice" currency="USD" mode="currency" locale="en-US"></p-inputnumber>
+    </div>
+    <!-- Botones de acción -->
+    <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px;">
+      <button pButton type="button" label="Cancelar" class="p-button-text" (click)="editDialog = false"></button>
+      <button pButton type="submit" label="Guardar" [disabled]="editForm.invalid" class="p-button-success"></button>
     </div>
   </form>
  
 
-
-  @if(editForm.touched && editForm.invalid){
-  <div style="margin-top:10px;color:#d32f2f;font-size:13px;">
-    Revisa los campos. Check-out debe ser posterior a Check-in y el total debe ser mayor o igual a 0.
-  </div>
-  }
-</p-dialog>
-
-
-<!-- DIALOG: EDITAR -->
-<p-dialog header="Editar reserva" [(visible)]="editDialog" [style]="{width: '680px'}" [modal]="true" [closable]="true">
-  <form [formGroup]="editForm" (ngSubmit)="saveEdit()" class="p-fluid"
-    style="display:grid;grid-template-columns: 1fr 1fr; gap:12px;">
-    <!-- Left column -->
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <label>Check-In</label>
-      <!-- <p-calendar formControlName="checkInDate" showIcon dateFormat="dd/mm/yy" [showTime]="false" inputId="checkIn"></p-calendar> -->
-
-      <label>Check-Out</label>
-      <!-- <p-calendar formControlName="checkOutDate" showIcon dateFormat="dd/mm/yy" [showTime]="false" inputId="checkOut"></p-calendar> -->
-
-      <label>Total (USD)</label>
-      <!-- <p-inputNumber formControlName="totalPrice" [mode]="'currency'" currency="USD" [min]="0"></p-inputNumber> -->
-    </div>
-
-    <!-- Right column -->
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <label>Estatus</label>
-      <!-- <p-dropdown formControlName="status" [options]="statusOptions" optionLabel="label" optionValue="value" placeholder="Selecciona estatus"></p-dropdown> -->
-
-      <label>Huésped</label>
-      <input pInputText [value]="reservation?.guest?.fullName" disabled />
-
-      <label>Propiedad</label>
-      <input pInputText [value]="reservation?.property?.title" disabled />
-
-      <div style="margin-top:auto;display:flex;gap:8px;justify-content:flex-end;">
-        <button pButton type="button" label="Cancelar" class="p-button-text" (click)="editDialog = false"></button>
-        <button pButton type="submit" label="Guardar" [disabled]="editForm.invalid" class="p-button-success"></button>
-      </div>
-    </div>
-  </form>
-
-  @if(editForm.touched && editForm.invalid){
-  <div style="margin-top:10px;color:#d32f2f;font-size:13px;">
-    Revisa los campos. Check-out debe ser posterior a Check-in y el total debe ser mayor o igual a 0.
-  </div>
-  }
 
 </p-dialog>

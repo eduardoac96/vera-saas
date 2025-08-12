@@ -36,8 +36,8 @@ const mockProperties: PropertyDto[] = [
       { id: 'a2', name: 'Piscina', icon: 'pi pi-water' }
     ],
     photos: [
-      { id: 'p1', url: 'https://source.unsplash.com/random/800x600/?beach-house' },
-      { id: 'p2', url: 'https://source.unsplash.com/random/800x600/?pool' }
+      { id: 'p1', url: 'https://images.pexels.com/photos/53610/large-home-residential-house-architecture-53610.jpeg' },
+      { id: 'p2', url: 'https://images.pexels.com/photos/59924/pexels-photo-59924.jpeg' }
     ],
     pricePerDay: 250,
     maxGuests: 6,

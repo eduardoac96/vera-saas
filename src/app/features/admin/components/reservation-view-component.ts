@@ -4,13 +4,18 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ReservationDto } from '../../../core/models/reservation.dto';
 import { ReservationsService } from '../../../core/services/reservations.service';
 import { Dialog } from "primeng/dialog"; 
-import { DatePipe, CurrencyPipe } from '@angular/common'; 
+import { DatePipe, CurrencyPipe } from '@angular/common';
+import { DatePicker } from "primeng/datepicker"; 
+import { AutoComplete} from "primeng/autocomplete";
+import { InputGroup, } from "primeng/inputgroup";
+import { InputGroupAddon } from "primeng/inputgroupaddon";
+import {Toolbar} from "primeng/toolbar";
 
 @Component({
   selector: 'app-reservation-view',
   standalone: true,
   templateUrl: './reservation-view-component.html',
-  imports: [Dialog, DatePipe, CurrencyPipe, ReactiveFormsModule],
+  imports: [Dialog, DatePipe, CurrencyPipe, ReactiveFormsModule, DatePicker, AutoComplete, InputGroup, InputGroupAddon, Toolbar],
 })
 export class ReservationViewComponent {
   @Input() reservation?: ReservationDto | null;
