@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReservationsService } from '../../../core/services/reservations.service';
+import { SelectModule } from "primeng/select";
+import { FormsModule } from '@angular/forms';
 
 @Component({
     standalone: true,
     selector: 'reservations-stats-component',
-    imports: [CommonModule],
+    imports: [CommonModule, SelectModule, FormsModule],
     providers: [ReservationsService],
     templateUrl: 'stats-component.html'
 })
@@ -19,6 +21,15 @@ export class ReservationsStatsComponent {
     
     constructor(private reservationsService: ReservationsService){    
     }
+    
+     dropdownItems = [
+        { name: 'Quinta Odin', code: 'Odn1' },
+        { name: 'Quinta Vera', code: 'Vera1' },
+        { name: 'Cabaña Lola', code: 'Lola1' }
+    ];
+
+    dropdownItem = this.dropdownItems[0];
+    
     async ngOnInit(){
        await this.reservationsService.countReservations
        .subscribe((count) => (this._countReservations = count));

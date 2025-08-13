@@ -1,44 +1,70 @@
-<div class="col-span-12 lg:col-span-6 xl:col-span-4">
-            <div class="card mb-0">
-                <div class="flex justify-between mb-4">
-                    <div> 
-                        <span class="block text-muted-color font-medium mb-4">Reservas</span>
-                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{_countReservations}}</div>
-                    </div>
-                    <div class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-shopping-cart text-blue-500 text-xl!"></i>
-                    </div>
+<div class="col-span-12 lg:col-span-6 xl:col-span-3">
+    <div class="card mb-0">
+        <div class="flex justify-between mb-4">
+            <div class="w-full">
+                <div class="block text-muted-color font-medium text-xl mb-2 flex gap-2">
+                    <p-select id="state" [(ngModel)]="dropdownItem" [options]="dropdownItems" optionLabel="name"
+                          class="w-full"></p-select>
                 </div>
-                <span class="text-primary font-medium">{{_countReservationsMonth}} durante este mes </span>
- 
+
+                <div class="text-muted-color dark:text-surface-0 font-medium ">Colinas de Valle Verde 64117. </div>
+
+                <div class="text-muted-color dark:text-surface-0 font-medium ">Monterrey, Nuevo Leon. </div>
+
+
+
+            </div>
+           
+        </div>
+
+    </div>
+</div>
+
+<div class="col-span-12 lg:col-span-6 xl:col-span-3">
+    <div class="card mb-0">
+        <div class="flex justify-between mb-4">
+            <div>
+                <span class="block text-muted-color font-medium mb-4">Reservas</span>
+                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{_countReservations}}</div>
+            </div>
+            <div class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border"
+                style="width: 2.5rem; height: 2.5rem">
+                <i class="pi pi-shopping-cart text-blue-500 text-xl!"></i>
             </div>
         </div>
-        
-        <div class="col-span-12 lg:col-span-6 xl:col-span-4">
-            <div class="card mb-0">
-                <div class="flex justify-between mb-4">
-                    <div>
-                        <span class="block text-muted-color font-medium mb-4">Clientes</span>
-                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{_countClients}}</div>
-                    </div>
-                    <div class="flex items-center justify-center bg-cyan-100 dark:bg-cyan-400/10 rounded-border" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-users text-cyan-500 text-xl!"></i>
-                    </div>
-                </div>
-                <span class="text-primary font-medium">{{_countClientsMonth}} nuevos este mes </span>
+        <span class="text-primary font-medium">{{_countReservationsMonth}} durante este mes </span>
+
+    </div>
+</div>
+
+<div class="col-span-12 lg:col-span-6 xl:col-span-3">
+    <div class="card mb-0">
+        <div class="flex justify-between mb-4">
+            <div>
+                <span class="block text-muted-color font-medium mb-4">Clientes</span>
+                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{_countClients}}</div>
+            </div>
+            <div class="flex items-center justify-center bg-cyan-100 dark:bg-cyan-400/10 rounded-border"
+                style="width: 2.5rem; height: 2.5rem">
+                <i class="pi pi-users text-cyan-500 text-xl!"></i>
             </div>
         </div>
-        <div class="col-span-12 lg:col-span-6 xl:col-span-4">
-            <div class="card mb-0">
-                <div class="flex justify-between mb-4">
-                    <div>
-                        <span class="block text-muted-color font-medium mb-4">Comentarios</span>
-                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{_countPendingReviews}} Por leer</div>
-                    </div>
-                    <div class="flex items-center justify-center bg-purple-100 dark:bg-purple-400/10 rounded-border" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-comment text-purple-500 text-xl!"></i>
-                    </div>
+        <span class="text-primary font-medium">{{_countClientsMonth}} nuevos este mes </span>
+    </div>
+</div>
+<div class="col-span-12 lg:col-span-6 xl:col-span-3">
+    <div class="card mb-0">
+        <div class="flex justify-between mb-4">
+            <div>
+                <span class="block text-muted-color font-medium mb-4">Comentarios</span>
+                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{_countPendingReviews}} Por leer
                 </div>
-                <span class="text-primary font-medium">{{_countReviews}} en total </span> 
+            </div>
+            <div class="flex items-center justify-center bg-purple-100 dark:bg-purple-400/10 rounded-border"
+                style="width: 2.5rem; height: 2.5rem">
+                <i class="pi pi-comment text-purple-500 text-xl!"></i>
             </div>
         </div>
+        <span class="text-primary font-medium">{{_countReviews}} en total </span>
+    </div>
+</div>
