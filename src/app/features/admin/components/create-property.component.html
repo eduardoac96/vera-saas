@@ -1,40 +1,347 @@
 <p-fluid>
-        <div class="flex flex-col md:flex-row gap-8">
-            <div class="md:w-full">
-                <div class="card flex flex-col gap-4">
-                    <div class="font-semibold text-xl">Gestionemos tu quinta.</div>
-                    <div class="flex flex-col gap-2">
-                        <label for="name1">Nombre del alojamiento</label>
-                        <input pInputText id="name1" type="text" />
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="email1">Descripcion breve</label>
-                        <textarea pTextarea placeholder="Your Message" [autoResize]="true" rows="3" cols="30"></textarea>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="age1">Descripcion completa</label>
-                        <textarea pTextarea placeholder="Your Message" [autoResize]="true" rows="8" cols="30"></textarea>
+  <form class="flex flex-col gap-8">
+    <!-- Sección 1: Información básica -->
+    <div class="card p-4">
+      <h2 class="text-2xl font-bold mb-4">Información básica</h2>
 
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="age1">Fechas disponibles</label>
-                        <p-datepicker [showIcon]="true" [showButtonBar]="true" [(ngModel)]="calendarValue"></p-datepicker>
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label for="age1">Multimedia</label>
-                     </div>
-                    
-
-
-
-                    <p-button label="Submit" [fluid]="false"></p-button>
-
-                </div>
-
-              
-            </div>
-           
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <label for="propertyName">Nombre del alojamiento *</label>
+          <input
+            pInputText
+            id="propertyName"
+            type="text"
+            [(ngModel)]="propertyName"
+            name="propertyName"
+            required
+          />
         </div>
- 
-    </p-fluid>
+
+        <div class="flex flex-col gap-2">
+          <label for="slug">URL única (slug)</label>
+          <input
+            pInputText
+            id="slug"
+            type="text"
+            [(ngModel)]="slug"
+            name="slug"
+          />
+          <small class="text-gray-500">Ej: mi-casa-playa</small>
+        </div>
+
+        <div class="flex flex-col gap-2 md:col-span-2">
+          <label for="shortDescription">Descripción breve *</label>
+          <textarea
+            pTextarea
+            [(ngModel)]="shortDescription"
+            name="shortDescription"
+            [autoResize]="true"
+            rows="3"
+            required
+          ></textarea>
+          <small class="text-gray-500"
+            >Aparecerá en listados y resultados de búsqueda (máx. 200
+            caracteres)</small
+          >
+        </div>
+
+        <div class="flex flex-col gap-2 md:col-span-2">
+          <label for="fullDescription">Descripción completa *</label>
+          <textarea
+            pTextarea
+            [(ngModel)]="fullDescription"
+            name="fullDescription"
+            [autoResize]="true"
+            rows="6"
+            required
+          ></textarea>
+        </div>
+
+        <div class="flex flex-col gap-2 md:col-span-2">
+          <label for="metaKeywords">Palabras clave (SEO)</label>
+          <input
+            pInputText
+            id="metaKeywords"
+            type="text"
+            [(ngModel)]="metaKeywords"
+            name="metaKeywords"
+          />
+          <small class="text-gray-500"
+            >Separadas por comas. Ej: playa, familia, piscina</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección 2: Amenidades -->
+    <!-- Sección 2: Comodidades y servicios -->
+<div class="card p-4">
+  <h2 class="text-2xl font-bold mb-4">Comodidades y servicios</h2>
+  
+  <!-- Barra de búsqueda -->
+  <div class="mb-4">
+    <div class="p-inputgroup">
+     
+      
+
+             <p-multiselect [options]="amenities" [(ngModel)]="selectedAmenities" optionLabel="name" placeholder="Select Amenities" [maxSelectedLabels]="3" class="w-full md:w-80" />
+
+    </div>
+  </div>
+  
+  <!-- Categorías de comodidades -->
+    
+   
+</div>
+
+    <!-- Sección 3: Multimedia -->
+    <div class="card p-4">
+      <h2 class="text-2xl font-bold mb-4">Multimedia</h2>
+
+      <div class="flex flex-col gap-4">
+        <!-- Galería de medios -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div *ngFor="let media of mediaItems; let i = index" class="relative">
+            <div class="absolute top-1 right-1">
+              <p-button
+                icon="pi pi-times"
+                (click)="removeMedia(i)"
+                styleClass="p-button-danger p-button-rounded p-button-text"
+              ></p-button>
+            </div>
+
+            <div
+              *ngIf="media.type === 'image'"
+              class="h-40 bg-cover bg-center rounded-lg"
+              [style.background-image]="'url(' + media.url + ')'"
+            ></div>
+
+            <div
+              *ngIf="media.type === 'youtube'"
+              class="h-40 bg-gray-200 rounded-lg flex items-center justify-center"
+            >
+              <div class="text-center">
+                <i class="pi pi-youtube text-4xl text-red-500"></i>
+                <p class="mt-2 text-sm">Video de YouTube</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2">
+          <p-button
+            icon="pi pi-images"
+            label="Agregar imágenes"
+            (click)="showMediaDialog = true"
+          ></p-button>
+          <p-button
+            icon="pi pi-youtube"
+            label="Agregar video"
+            (click)="showMediaDialog = true"
+            styleClass="p-button-warning"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección 4: Disponibilidad -->
+    <div class="card p-4">
+      <h2 class="text-2xl font-bold mb-4">Disponibilidad</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-xl font-semibold mb-3">Calendario</h3>
+
+          <div class="mb-4 flex gap-2">
+            <p-selectButton
+              [options]="[
+                { label: 'Selección simple', value: 'single' },
+                { label: 'Rango de fechas', value: 'range' },
+              ]"
+              [(ngModel)]="calendarView"
+              name="calendarView"
+            ></p-selectButton>
+          </div>
+
+          <p-datepicker
+            [(ngModel)]="rangeDates"
+            [selectionMode]="calendarView"
+            [inline]="true"
+            [showButtonBar]="true"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [disabledDates]="blockedDates"
+          ></p-datepicker>
+
+          <div class="mt-4">
+            <p-button
+              label="Bloquear fechas seleccionadas"
+              (click)="blockDate()"
+              styleClass="p-button-secondary"
+            ></p-button>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold mb-3">Fechas bloqueadas</h3>
+
+          <div *ngIf="blockedDates.length === 0" class="text-gray-500">
+            No hay fechas bloqueadas
+          </div>
+
+          <div
+            *ngFor="let date of blockedDates"
+            class="flex items-center justify-between p-2 border-b"
+          >
+            <span>{{ date | date: "mediumDate" }}</span>
+            <p-button
+              icon="pi pi-lock-open"
+              (click)="unblockDate(date)"
+              styleClass="p-button-text p-button-danger"
+            ></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección 5: Configuración avanzada -->
+    <div class="card p-4">
+      <h2 class="text-2xl font-bold mb-4">Configuración avanzada</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2 md:col-span-2">
+          <div class="flex justify-between items-center">
+            <label>Precios por número de huéspedes</label>
+            <p-button
+              icon="pi pi-plus"
+              label="Agregar nivel"
+              (click)="addPricingLevel()"
+              size="small"
+            ></p-button>
+          </div>
+
+          <div class="mt-2 border rounded-lg divide-y">
+            <div
+              *ngFor="let level of pricingLevels; let i = index"
+              class="p-3 grid grid-cols-12 gap-2 items-center"
+            >
+              <div class="col-span-4 md:col-span-3 flex items-center gap-2">
+                <span class="text-gray-500 whitespace-nowrap">De</span>
+                <p-inputNumber
+                  [(ngModel)]="level.minGuests"
+                  [min]="1"
+                  [max]="maxGuests"
+                  [showButtons]="true"
+                  placeholder="Mín"
+                  styleClass="w-full"
+                ></p-inputNumber>
+              </div>
+
+              <div class="col-span-4 md:col-span-3 flex items-center gap-2">
+                <span class="text-gray-500 whitespace-nowrap">a</span>
+                <p-inputNumber
+                  [(ngModel)]="level.maxGuests"
+                  [min]="level.minGuests"
+                  [max]="maxGuests"
+                  [showButtons]="true"
+                  placeholder="Máx"
+                  styleClass="w-full"
+                ></p-inputNumber>
+              </div>
+
+              <div class="col-span-4 md:col-span-4 flex items-center gap-2">
+                <span class="text-gray-500 whitespace-nowrap">Precio:</span>
+                <p-inputNumber
+                  [(ngModel)]="level.price"
+                  mode="currency"
+                  currency="MXN"
+                  [min]="1"
+                  [max]="100000"
+                  [showButtons]="true"
+                  placeholder="MXN"
+                  styleClass="w-full"
+                ></p-inputNumber>
+              </div>
+
+              <div
+                class="col-span-12 md:col-span-2 flex justify-end mt-2 md:mt-0"
+              >
+                <p-button
+                  icon="pi pi-trash"
+                  (click)="removePricingLevel(i)"
+                  styleClass="p-button-danger p-button-text"
+                ></p-button>
+              </div>
+            </div>
+
+            <div
+              *ngIf="pricingLevels.length === 0"
+              class="p-4 text-center text-gray-500"
+            >
+              No hay niveles de precios configurados
+            </div>
+          </div>
+
+          <small class="text-gray-500 block mt-2">
+            Define precios diferentes según el número de huéspedes. Ej: 1-4
+            huéspedes: $1000, 5-8 huéspedes: $1500
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón de envío -->
+    <div class="flex justify-end">
+      <p-button
+        label="Crear alojamiento"
+        type="submit"
+        icon="pi pi-check"
+        styleClass="p-button-success"
+      ></p-button>
+    </div>
+
+    <!-- Botón de envío -->
+  </form>
+</p-fluid>
+
+<!-- Diálogo para agregar multimedia -->
+<p-dialog
+  header="Agregar multimedia"
+  [(visible)]="showMediaDialog"
+  [style]="{ width: '500px' }"
+>
+  <div class="flex flex-col gap-4">
+    <div>
+      <h4 class="font-medium mb-2">Subir imágenes</h4>
+      <p-fileUpload
+        name="images"
+        [multiple]="true"
+        accept="image/*"
+        (onUpload)="onUpload($event)"
+        [maxFileSize]="10000000"
+      >
+        <ng-template pTemplate="content">
+          <small>Arrastra imágenes aquí o haz clic para seleccionar</small>
+        </ng-template>
+      </p-fileUpload>
+    </div>
+
+    <div>
+      <h4 class="font-medium mb-2">Agregar video de YouTube</h4>
+      <div class="flex gap-2">
+        <input
+          pInputText
+          type="text"
+          placeholder="URL de YouTube"
+          [(ngModel)]="youtubeUrl"
+          style="flex: 1"
+        />
+        <p-button
+          label="Agregar"
+          (click)="addYoutubeVideo()"
+          [disabled]="!youtubeUrl"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</p-dialog>
