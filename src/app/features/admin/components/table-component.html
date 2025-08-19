@@ -3,7 +3,7 @@
   <div class="flex items-center justify-between mb-4">
     <div class="font-semibold text-xl">Gestion de Reservas</div>
     <div>
-      <p-button icon="pi pi-plus" label="Nueva Reserva" [fluid]="false"></p-button>
+      <p-button icon="pi pi-plus" label="Reserva Manual" [fluid]="false"></p-button>
 
   
      </div>
@@ -53,6 +53,9 @@
           {{ res.totalPrice | currency:'MXN':'symbol' }}
         </td>
 
+         <td>
+          Reserva Manual
+        </td>
         <!-- Estatus -->
         <td>
           <p-tag [value]="res.status" [severity]="
@@ -65,8 +68,7 @@
 
         <!-- Acciones -->
         <td>
-          <button pButton icon="pi pi-eye" class="p-button-text p-button-rounded p-button-info"
-            (click)="onView(res)"></button>
+         
           <button pButton icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-warning"
             (click)="onEdit(res)"></button>
         </td>

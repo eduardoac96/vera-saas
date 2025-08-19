@@ -72,13 +72,14 @@
     <!-- Columna derecha -->
     <div style="display: flex; flex-direction: column; gap: 12px;">
       <label>Check-In</label>
-      <p-datepicker formControlName="checkInDate" showIcon dateFormat="dd/mm/yy" inputId="checkIn"></p-datepicker>
+      <p-datepicker formControlName="checkInDate" showIcon dateFormat="dd/mm/yy DD" inputId="checkIn"></p-datepicker>
 
       <label>Check-Out</label>
-      <p-datepicker formControlName="checkOutDate" showIcon dateFormat="dd/mm/yy" inputId="checkOut"></p-datepicker>
+      <p-datepicker formControlName="checkOutDate" showIcon dateFormat="dd/mm/yy DD" inputId="checkOut"></p-datepicker>
 
-      <label>Total (USD)</label>
-      <p-inputnumber formControlName="totalPrice" currency="USD" mode="currency" locale="en-US"></p-inputnumber>
+      <label>Total (MXN)</label>
+      <p-inputnumber formControlName="totalPrice" currency="MXN" mode="currency" locale="es-MX" [disabled]="true"></p-inputnumber>
+     
     </div>
     <!-- Botones de acción -->
     <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px;">

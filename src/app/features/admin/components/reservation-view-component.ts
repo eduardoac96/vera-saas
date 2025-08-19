@@ -10,12 +10,13 @@ import { AutoComplete} from "primeng/autocomplete";
 import { InputGroup, } from "primeng/inputgroup";
 import { InputGroupAddon } from "primeng/inputgroupaddon";
 import {Toolbar} from "primeng/toolbar";
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-reservation-view',
   standalone: true,
   templateUrl: './reservation-view-component.html',
-  imports: [Dialog, DatePipe, CurrencyPipe, ReactiveFormsModule, DatePicker, AutoComplete, InputGroup, InputGroupAddon, Toolbar],
+  imports: [Dialog, DatePipe, CurrencyPipe, ReactiveFormsModule, DatePicker, InputNumberModule],
 })
 export class ReservationViewComponent {
   @Input() reservation?: ReservationDto | null;
