@@ -4,12 +4,13 @@
             <div class="w-full">
                 <div class="block text-muted-color font-medium text-xl mb-2 flex gap-2">
                     <p-select id="state" [(ngModel)]="dropdownItem" [options]="dropdownItems" optionLabel="name"
-                          class="w-full"></p-select>
+                          class="w-full"
+                          (onChange)="onSelectionChange($event)"
+                          ></p-select>
                 </div>
 
-                <div class="text-muted-color dark:text-surface-0 font-medium ">Colinas de Valle Verde 64117. </div>
-
-                <div class="text-muted-color dark:text-surface-0 font-medium ">Monterrey, Nuevo Leon. </div>
+                <div class="text-muted-color dark:text-surface-0 font-medium ">{{_address}} </div>
+ 
 
 
 

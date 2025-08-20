@@ -23,7 +23,7 @@ export class ReservationsTableComponent {
   constructor(private reservationsService: ReservationsService) { }
 
   async ngOnInit() {
-    (await this.reservationsService.getReservations()).subscribe((data) => (this.reservations = data));
+    (await this.reservationsService.getReservations("prop-102")).subscribe((data) => (this.reservations = data));
   }
 
   items = [

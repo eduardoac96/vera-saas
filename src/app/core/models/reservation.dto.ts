@@ -12,5 +12,5 @@ export interface ReservationDto
     totalPrice: number;
     status: 'Pendiente' | 'Confirmada' | 'Cancelada';
     createdAt: string;
-    updatedAt?: string;
+    updatedAt?: string; 
  }

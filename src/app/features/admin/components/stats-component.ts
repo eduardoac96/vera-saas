@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReservationsService } from '../../../core/services/reservations.service';
+
 import { SelectModule } from "primeng/select";
 import { FormsModule } from '@angular/forms';
+import { PropertiesService } from '../../../core/services/properties.service';
 
 @Component({
     standalone: true,
     selector: 'reservations-stats-component',
     imports: [CommonModule, SelectModule, FormsModule],
-    providers: [ReservationsService],
+    providers: [ReservationsService, PropertiesService],
     templateUrl: 'stats-component.html'
 })
 export class ReservationsStatsComponent {
@@ -17,38 +19,65 @@ export class ReservationsStatsComponent {
     _countClients = 0;
     _countClientsMonth = 0;
     _countReviews = 0;
-    _countPendingReviews=0;
-    
-    constructor(private reservationsService: ReservationsService){    
+    _countPendingReviews = 0;
+    _address= "";
+
+    constructor(private reservationsService: ReservationsService, private propertiesService: PropertiesService) {
+
+
     }
-    
-     dropdownItems = [
-        { name: 'Quinta Odin', code: 'Odn1' },
-        { name: 'Quinta Vera', code: 'Vera1' },
-        { name: 'Cabaña Lola', code: 'Lola1' }
-    ];
+    dropdownItems: any[] = [];
+    dropdownItem: any;
 
-    dropdownItem = this.dropdownItems[0];
-    
-    async ngOnInit(){
-       await this.reservationsService.countReservations
-       .subscribe((count) => (this._countReservations = count));
+    async ngOnInit() {
 
-       await this.reservationsService.countReservations
-       .subscribe((count) => (this._countReservationsMonth = count));
 
-       await this.reservationsService.countClients
-       .subscribe((count) => (this._countClients = count));
 
-        await this.reservationsService.countClients
-       .subscribe((count) => (this._countClientsMonth = count));
 
-       await this.reservationsService.countReviews 
-       .subscribe((count) => (this._countReviews = count));
+        this.propertiesService.getProperties("tenant-001")
+            .subscribe(props => {
+                this.dropdownItems = props.map(p => ({
+                    name: p.title,
+                    code: p.id
+                }));
+                // Selecciona la primera como default si hay items
+                if (this.dropdownItems.length > 0) {
+                    this.dropdownItem = this.dropdownItems[0];
+                }
+            });
 
-       await this.reservationsService.countPendingReviews 
-       .subscribe((count) => (this._countReviews = count));
 
+        this.loadStats(this.dropdownItem.code);
+
+
+
+    }
+
+    async onSelectionChange(event: any) {
+        const selectedCode = event.value.code;
+        await this.loadStats(selectedCode);
+    }
+    private async loadStats(propertyId: string) {
        
+        await this.propertiesService.getPropertyAddress(propertyId)
+            .subscribe((address) => this._address = address);
+        await this.reservationsService.countReservations(propertyId)
+            .subscribe((count) => (this._countReservations = count));
+
+        await this.reservationsService.countReservations(propertyId)
+            .subscribe((count) => (this._countReservationsMonth = count));
+
+        await this.propertiesService.countClients(propertyId)
+            .subscribe((count) => (this._countClients = count));
+
+        await this.propertiesService.countClients(propertyId)
+            .subscribe((count) => (this._countClientsMonth = count));
+
+        await this.propertiesService.countReviews(propertyId)
+            .subscribe((count) => (this._countReviews = count));
+
+        await this.propertiesService.countPendingReviews(propertyId)
+            .subscribe((count) => (this._countReviews = count));
+
     }
 }

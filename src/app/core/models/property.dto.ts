@@ -7,13 +7,13 @@ import { UserDto } from "./user.dto";
 export interface PropertyDto {
     id: string;
     title: string;
-    description: string;
-    host: UserDto;
-    location: LocationDto;
-    amenities: AmenityDto[];
-    photos: PhotoDto[];
-    pricePerDay: number;
-    maxGuests: number;
+    description?: string;
+    location?: LocationDto;
+    amenities?: AmenityDto[];
+    photos?: PhotoDto[];
+    pricePerDay?: number;
+    maxGuests?: number;
     createdAt: string;
     updatedAt: string;
+    tenantId:string;
 }
