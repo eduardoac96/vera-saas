@@ -28,7 +28,7 @@ export const mockReservations: ReservationDto[] = [
   {
     id: 'res-001',
     property: mockProperties[1],
-    guest: mockGuests[0],
+    guest: mockGuests[1],
     checkInDate: '2025-09-20T15:00:00Z',
     checkOutDate: '2025-09-25T11:00:00Z',
     totalPrice: 3000, // 5 noches * $250
@@ -39,7 +39,7 @@ export const mockReservations: ReservationDto[] = [
   {
     id: 'res-001',
     property: mockProperties[2],
-    guest: mockGuests[0],
+    guest: mockGuests[2],
     checkInDate: '2025-09-20T15:00:00Z',
     checkOutDate: '2025-09-25T11:00:00Z',
     totalPrice: 2000, // 5 noches * $250

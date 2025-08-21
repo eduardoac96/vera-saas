@@ -1,30 +1,26 @@
 import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-import {
-  mockNotifications,
-  NotificationDto, 
-} from '../../../core/models/notification.dto';
+import { NotificationDto } from '../../../core/models/notification.dto';
 import { CommonModule, DatePipe } from '@angular/common';
+import { mockNotifications } from '@/core/mocks/mockNotifications';
+import { PropertiesService } from '@/core/services/properties.service';
 
 @Component({
   standalone: true,
   selector: 'reservation-notification-component',
   imports: [ButtonModule, MenuModule, DatePipe, CommonModule],
+  providers: [PropertiesService],
   templateUrl: './notification-component.html',
 })
 export class ReservationsNotificationComponent {
   private _propertyId = '';
   private _notifications: NotificationDto[] = [];
 
-  constructor() {}
+  constructor(private propertiesService: PropertiesService) {}
   @Input() mode: 'full' | 'compact' = 'full';
-  @Input()
-  set propertyId(value: string) {
-    if (!value) return;
-    this._propertyId = value;
-    this.loadNotifications();
-  }
+  @Input() propertyId!: string;
+
   items = [
     {
       label: 'Marcar todas como leídas',
@@ -32,11 +28,18 @@ export class ReservationsNotificationComponent {
       command: () => this.clearAll(),
     },
   ];
-
-  private async loadNotifications() {
-  this._notifications = mockNotifications;
-
+  async ngOnInit() {
+    await this.loadNotifications();
   }
+  async ngOnChanges() {
+    await this.loadNotifications();
+  }
+  private async loadNotifications() {
+    (
+      await this.propertiesService.getNotificationsBy(this.propertyId)
+    ).subscribe((data) => (this._notifications = data));
+  }
+
   clearAll() {
     this._notifications = [];
   }

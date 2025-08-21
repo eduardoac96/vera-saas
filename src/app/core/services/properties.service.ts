@@ -5,13 +5,22 @@ import { BehaviorSubject, map } from "rxjs";
 import { Injectable } from "@angular/core";
 import { ReviewDto } from "../models/review.dto";
 import { mockReviews } from "../mocks/mockReviews";
+import { NotificationDto } from "../models/notification.dto";
+import { mockNotifications } from "../mocks/mockNotifications";
 
 @Injectable()
 export class PropertiesService {
   constructor(private http: HttpClient) { }
   private _properties = new BehaviorSubject<PropertyDto[]>(mockProperties);
-  private _reviews = new BehaviorSubject<ReviewDto[]>(mockReviews);
 
+  private _reviews = new BehaviorSubject<ReviewDto[]>(mockReviews);
+  private _notifications = new BehaviorSubject<NotificationDto[]>(mockNotifications);
+
+  getNotificationsBy(propertyId: string){
+    return this._notifications.pipe(
+      map(props => props.filter(p => p.property.id === propertyId))
+    );
+  }
 
   getProperties(tenantId: string) {
     return this._properties.pipe(

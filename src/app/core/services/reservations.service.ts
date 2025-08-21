@@ -5,62 +5,78 @@ import { PropertyDto } from '../models/property.dto';
 import { UserDto } from '../models/user.dto';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { ReviewDto } from '../models/review.dto';
-import { mockNotifications, NotificationDto } from '../models/notification.dto';
+import { NotificationDto } from '../models/notification.dto';
 import { mockReservations } from '../mocks/mockReservations';
 import { mockReviews } from '../mocks/mockReviews';
- 
+import { mockNotifications } from '../mocks/mockNotifications';
 
 @Injectable()
 export class ReservationsService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  private _reservations = new BehaviorSubject<ReservationDto[]>(mockReservations);
-  private _notifications = new BehaviorSubject<NotificationDto[]>(mockNotifications);
-
+  private _reservations = new BehaviorSubject<ReservationDto[]>(
+    mockReservations,
+  );
+  private _notifications = new BehaviorSubject<NotificationDto[]>(
+    mockNotifications,
+  );
 
   countReservations(propertyId: string) {
     return this._reservations.pipe(
-      map(reservations => reservations.length)
+      map(
+        (reservations) =>
+          reservations.filter((r) => r.property.id === propertyId).length,
+      ),
     );
   }
   countReservationsPerMonth(propertyId: string) {
-   return this._reservations.pipe(
-      map(reservations => reservations.length)
+    return this._reservations.pipe(
+      map(
+        (reservations) =>
+          reservations.filter((r) => r.property.id === propertyId).length,
+      ),
     );
   }
 
- private getReservationsData(propertyId: string): Observable<ReservationDto[]> {
-  return this._reservations.asObservable().pipe(
-    map(reservations =>
-      reservations.filter(r => r.property.id === propertyId)
-    )
-  );
-}
+  private getReservationsData(
+    propertyId: string,
+  ): Observable<ReservationDto[]> {
+    return this._reservations
+      .asObservable()
+      .pipe(
+        map((reservations) =>
+          reservations.filter((r) => r.property.id === propertyId),
+        ),
+      );
+  }
 
-  private getNotificationsData(propertyId: string): Observable<NotificationDto[]> {
-    return this._notifications.asObservable();
+  private getNotificationsData(
+    propertyId: string,
+  ): Observable<NotificationDto[]> {
+    return this._notifications
+      .asObservable()
+      .pipe(
+        map((notifications) =>
+          notifications.filter((n) => n.property.id === propertyId),
+        ),
+      );
   }
 
   getReservations(propertyId: string) {
     return Promise.resolve(this.getReservationsData(propertyId));
   }
 
-
   getNotifications(propertyId: string) {
     return Promise.resolve(this.getNotificationsData(propertyId));
   }
 
-
-
-
-
   getReservationById(id: string): Observable<ReservationDto | undefined> {
     const reservation = this._reservations.value;
-    return of(reservation.find(r => r.id === id));
+    return of(reservation.find((r) => r.id === id));
   }
   updateReservation(updated: ReservationDto): Observable<ReservationDto> {
     const arr = [...this._reservations.value];
-    const idx = arr.findIndex(r => r.id === updated.id);
+    const idx = arr.findIndex((r) => r.id === updated.id);
     if (idx >= 0) {
       arr[idx] = { ...updated, updatedAt: new Date().toISOString() };
       this._reservations.next(arr);
