@@ -3,9 +3,9 @@
     
     (propertySelected)="onPropertySelected($event)" />
     <div class="col-span-12 xl:col-span-12">
-        <reservations-table-component [propertyId]="propertySelected"/>
+        <reservations-table-component [propertyId]="selectedPropertyId"/>
     </div>
     <div class="col-span-12 xl:col-span-12">
-        <reservation-notification-component [propertyId]="propertySelected"/>
+        <reservation-notification-component [propertyId]="selectedPropertyId"/>
     </div>
 </div>
