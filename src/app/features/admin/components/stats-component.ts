@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReservationsService } from '../../../core/services/reservations.service';
 
@@ -20,45 +20,43 @@ export class ReservationsStatsComponent {
     _countClientsMonth = 0;
     _countReviews = 0;
     _countPendingReviews = 0;
-    _address= "";
-
+    _address = "";
     constructor(private reservationsService: ReservationsService, private propertiesService: PropertiesService) {
 
 
     }
+    @Output() propertySelected = new EventEmitter<string>();
+
+    async onSelect(event: any) {
+        const selectedCode = event.value.code;
+        this.propertySelected.emit(selectedCode);
+         await this.loadStats(selectedCode);
+    }
+
     dropdownItems: any[] = [];
     dropdownItem: any;
 
     async ngOnInit() {
+      this.propertiesService.getProperties("tenant-001")
+    .subscribe(props => {
+      this.dropdownItems = props.map(p => ({
+        name: p.title,
+        code: p.id
+      }));
 
+      // Selecciona la primera como default si hay items
+      if (this.dropdownItems.length > 0) {
+        this.dropdownItem = this.dropdownItems[0];
 
-
-
-        this.propertiesService.getProperties("tenant-001")
-            .subscribe(props => {
-                this.dropdownItems = props.map(p => ({
-                    name: p.title,
-                    code: p.id
-                }));
-                // Selecciona la primera como default si hay items
-                if (this.dropdownItems.length > 0) {
-                    this.dropdownItem = this.dropdownItems[0];
-                }
-            });
-
-
+        // Ahora sí ya hay valor, se ejecuta con la primer propiedad
         this.loadStats(this.dropdownItem.code);
-
-
-
+      }
+    });
     }
 
-    async onSelectionChange(event: any) {
-        const selectedCode = event.value.code;
-        await this.loadStats(selectedCode);
-    }
+
     private async loadStats(propertyId: string) {
-       
+
         await this.propertiesService.getPropertyAddress(propertyId)
             .subscribe((address) => this._address = address);
         await this.reservationsService.countReservations(propertyId)

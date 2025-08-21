@@ -29,10 +29,14 @@ export class ReservationsService {
     );
   }
 
- 
-  private getReservationsData(propertyId: string): Observable<ReservationDto[]> {
-    return this._reservations.asObservable();
-  }
+ private getReservationsData(propertyId: string): Observable<ReservationDto[]> {
+  return this._reservations.asObservable().pipe(
+    map(reservations =>
+      reservations.filter(r => r.property.id === propertyId)
+    )
+  );
+}
+
   private getNotificationsData(propertyId: string): Observable<NotificationDto[]> {
     return this._notifications.asObservable();
   }

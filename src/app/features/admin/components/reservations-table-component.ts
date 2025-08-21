@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -12,19 +12,32 @@ import { ReservationViewComponent } from "./reservation-view-component";
 
 @Component({
   standalone: true,
-  selector: 'app-reservations-component',
+  selector: 'reservations-table-component',
   imports: [CommonModule, TagModule, TableModule, ButtonModule, RippleModule, Menu, Dialog, ReservationViewComponent],
-  templateUrl: './table-component.html',
+  templateUrl: './reservations-table-component.html',
   providers: [ReservationsService]
 })
 export class ReservationsTableComponent {
   reservations!: ReservationDto[];
+  @Input() propertyId!: string;
+
 
   constructor(private reservationsService: ReservationsService) { }
 
   async ngOnInit() {
-    (await this.reservationsService.getReservations("prop-102")).subscribe((data) => (this.reservations = data));
+
+
+    (await this.reservationsService.getReservations(this.propertyId)).subscribe((data) => (this.reservations = data));
+
   }
+
+  async ngOnChanges() {
+
+    (await this.reservationsService.getReservations(this.propertyId)).subscribe((data) => (this.reservations = data));
+
+  }
+
+
 
   items = [
     { label: 'Add New', icon: 'pi pi-fw pi-plus', command: () => this.addNewNotification() },
@@ -36,13 +49,14 @@ export class ReservationsTableComponent {
   // referencia al componente hijo (el viewer)
   @ViewChild('viewer') viewer!: ReservationViewComponent;
 
-  onView(res: ReservationDto) {   if (!this.viewer) {
+  onView(res: ReservationDto) {
+    if (!this.viewer) {
       console.warn('Viewer no inicializado aún');
       return;
-    } 
+    }
     this.viewer.openView(res); // <-- abre el dialog en ReservationViewComponent
   }
- onEdit(res: ReservationDto) {
+  onEdit(res: ReservationDto) {
     if (!this.viewer) {
       console.warn('Viewer no inicializado aún');
       return;

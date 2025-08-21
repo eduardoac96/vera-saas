@@ -20,56 +20,35 @@ export class AppMenu {
 
     ngOnInit() {
         this.model = [
-            {
-                label: 'Home',
-                items: [{ label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
-            },
+      
            
             {
-                label: 'Pages',
+                label: '',
                 icon: 'pi pi-fw pi-briefcase',
                 routerLink: ['/pages'],
                 items: [
                     {
-                        label: 'Landing',
+                        label: 'Vera Web',
                         icon: 'pi pi-fw pi-globe',
                         routerLink: ['/landing']
                     },
                     {
-                        label: 'Auth',
+                        label: 'Administrador',
                         icon: 'pi pi-fw pi-user',
                         items: [
                             {
-                                label: 'Login',
+                                label: 'Nueva Propiedad',
+                                icon: 'pi pi-fw pi-plus',
+                                routerLink: ['/create']
+                            },
+                            {
+                                label: 'Panel de Reservas',
                                 icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['/auth/login']
+                                routerLink: ['/']
                             },
-                            {
-                                label: 'Error',
-                                icon: 'pi pi-fw pi-times-circle',
-                                routerLink: ['/auth/error']
-                            },
-                            {
-                                label: 'Access Denied',
-                                icon: 'pi pi-fw pi-lock',
-                                routerLink: ['/auth/access']
-                            }
+
+                          
                         ]
-                    },
-                    {
-                        label: 'Crud',
-                        icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/pages/crud']
-                    },
-                    {
-                        label: 'Not Found',
-                        icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/pages/notfound']
-                    },
-                    {
-                        label: 'Empty',
-                        icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/pages/empty']
                     }
                 ]
             } 

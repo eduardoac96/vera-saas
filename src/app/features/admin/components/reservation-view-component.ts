@@ -23,6 +23,10 @@ export class ReservationViewComponent {
   @Output() saved = new EventEmitter<ReservationDto>();
   @Output() closed = new EventEmitter<void>(); 
 
+
+  @Input() propertyId!: string;
+
+
   viewDialog = false;
   editDialog = false;
   editForm!: FormGroup;

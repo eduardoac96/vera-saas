@@ -13,7 +13,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 export class ReservationsNotificationComponent {
     constructor(){}
     @Input() mode: 'full' | 'compact' = 'full';
-
+    @Input() propertyId!: string;
 
   items = [
     { label: 'Marcar todas como leídas', icon: 'pi pi-check', command: () => this.clearAll() }
