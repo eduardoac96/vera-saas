@@ -40,15 +40,7 @@ export class PropertiesService {
     );
   }
 
-  countClients(propertyId: string) {
-    return this._properties.pipe(
-      map(properties => {
-        // const uniqueClients = new Set(reservations.map(r => r.property?.host.id));
-        // return uniqueClients.size;
-        return 100;
-      })
-    )
-  }
+
 
   countReviews(propertyId: string) {
     return this._reviews.pipe(

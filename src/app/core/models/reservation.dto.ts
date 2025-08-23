@@ -6,7 +6,7 @@ export interface ReservationDto
 
     id: string;
     property: PropertyDto;
-    guest: UserDto;
+    guest?: UserDto;
     checkInDate: string;
     checkOutDate: string;
     totalPrice: number;

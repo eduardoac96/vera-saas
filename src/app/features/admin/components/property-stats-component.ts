@@ -66,11 +66,11 @@ export class ReservationsStatsComponent {
       .countReservations(propertyId)
       .subscribe((count) => (this._countReservationsMonth = count));
 
-    await this.propertiesService
+    await this.reservationsService
       .countClients(propertyId)
       .subscribe((count) => (this._countClients = count));
 
-    await this.propertiesService
+    await this.reservationsService
       .countClients(propertyId)
       .subscribe((count) => (this._countClientsMonth = count));
 

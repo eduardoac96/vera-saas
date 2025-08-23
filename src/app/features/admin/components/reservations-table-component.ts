@@ -3,17 +3,17 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
-import { Menu } from "primeng/menu";
 import { TagModule } from 'primeng/tag';
 import { ReservationsService } from '../../../core/services/reservations.service';
 import { ReservationDto } from '../../../core/models/reservation.dto';
-import { Dialog } from "primeng/dialog";
-import { ReservationViewComponent } from "./reservation-view-component";
+import { ReservationDialogComponent } from "./reservation-dialog-component";
+import { mockProperties } from '../../../core/mocks/mockProperties';
+import { Toast } from "primeng/toast";
 
 @Component({
   standalone: true,
   selector: 'reservations-table-component',
-  imports: [CommonModule, TagModule, TableModule, ButtonModule, RippleModule, Menu, Dialog, ReservationViewComponent],
+  imports: [CommonModule, TagModule, TableModule, ButtonModule, RippleModule, ReservationDialogComponent, Toast],
   templateUrl: './reservations-table-component.html',
   providers: [ReservationsService]
 })
@@ -42,30 +42,21 @@ export class ReservationsTableComponent {
 
 
   items = [
-    { label: 'Add New', icon: 'pi pi-fw pi-plus', command: () => this.addNewNotification() },
-    { label: 'Remove', icon: 'pi pi-fw pi-trash', command: () => this.removeNotifications() }
+    { label: 'Add New', icon: 'pi pi-fw pi-plus', command: () => this.addNewNotification() }
   ];
   @Output() view = new EventEmitter<ReservationDto>();
   @Output() edit = new EventEmitter<ReservationDto>();
   @Output() delete = new EventEmitter<string>();
   // referencia al componente hijo (el viewer)
-  @ViewChild('viewer') viewer!: ReservationViewComponent;
+  // @ViewChild('viewer') viewer!: ReservationDialogComponent;
+  showManualDialog = false;
+  selectedProperty = mockProperties[0]; // o la property actual en contexto
 
-  onView(res: ReservationDto) {
-    if (!this.viewer) {
-      console.warn('Viewer no inicializado aún');
-      return;
-    }
-    this.viewer.openView(res); // <-- abre el dialog en ReservationViewComponent
+  onManualReservationSaved(res: any) {
+    // Aquí puedes refrescar la tabla o hacer cualquier otra acción
+    console.log('reservacion creada', res);
+    // por ejemplo: this.loadReservations(currentPropertyId);
   }
-  onEdit(res: ReservationDto) {
-    if (!this.viewer) {
-      console.warn('Viewer no inicializado aún');
-      return;
-    }
-    this.viewer.openEdit(res); // <-- abre el diálogo de edición
-  }
-
 
   addNewNotification() {
     alert("TODO");

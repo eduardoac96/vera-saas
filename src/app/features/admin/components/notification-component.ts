@@ -2,9 +2,8 @@ import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { NotificationDto } from '../../../core/models/notification.dto';
-import { CommonModule, DatePipe } from '@angular/common';
-import { mockNotifications } from '@/core/mocks/mockNotifications';
-import { PropertiesService } from '@/core/services/properties.service';
+import { CommonModule, DatePipe } from '@angular/common'; 
+import { PropertiesService } from '../../../core/services/properties.service';
 
 @Component({
   standalone: true,
@@ -13,8 +12,7 @@ import { PropertiesService } from '@/core/services/properties.service';
   providers: [PropertiesService],
   templateUrl: './notification-component.html',
 })
-export class ReservationsNotificationComponent {
-  private _propertyId = '';
+export class ReservationsNotificationComponent { 
   private _notifications: NotificationDto[] = [];
 
   constructor(private propertiesService: PropertiesService) {}

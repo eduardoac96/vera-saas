@@ -1,0 +1,69 @@
+<p-dialog header="Reserva manual" [(visible)]="visible" [modal]="true" [style]="{width: '40vw'}" [closable]="true"
+  [ngStyle]="{'padding':'1.5rem','background':'#fafafa','border-radius':'12px'}">
+
+  <div class="p-fluid">
+
+    <!-- Propiedad -->
+    <div class="p-field" style="margin-bottom: 1.2rem;">
+      <div class="p-field p-col">
+        <label for="property" style="font-weight: 500; color: #34495e;">Propiedad</label>
+        <input id="property" type="text" pInputText [value]="property?.title" disabled
+          style="border-radius: 8px; padding: 0.6rem;" />
+      </div>
+    </div>
+
+
+    <div class="p-field-checkbox" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+      <p-checkbox inputId="existingUser" [(ngModel)]="isExistingUser"></p-checkbox>
+      <label for="existingUser" style="margin: 0; font-size: 0.95rem; color: #555;">¿Es usuario existente?</label>
+    </div>
+
+    <!-- Huésped -->
+    <div class="p-field" style="margin-bottom: 1.2rem;">
+      <div class="p-field p-col">
+        <label for="guest" style="font-weight: 500; color: #34495e;">Huésped</label>
+
+        <p-autoComplete id="guest" [(ngModel)]="selectedGuest" [suggestions]="filteredGuests"
+          (completeMethod)="filterGuests($event)" optionLabel="fullName" placeholder="Busca por nombre"
+          style="width: 100%; border-radius: 8px; padding: 0.6rem;">
+        </p-autoComplete>
+      </div>
+    </div>
+    <!-- Checkbox de usuario existente -->
+
+    <!-- Fechas -->
+    <div class="p-field" style="margin-bottom: 1.2rem;">
+      <div class="p-field p-col">
+        <label for="checkin" style="font-weight: 500; color: #34495e;">Fechas</label>
+        <p-datepicker id="checkin" [(ngModel)]="checkInDate" dateFormat="dd/mm/yy" selectionMode="range"
+          readonlyInput="true" style="width: 100%; border-radius: 8px; padding: 0.6rem;">
+        </p-datepicker>
+      </div>
+
+    </div>
+
+    <!-- Paquete -->
+    <div class="p-field" style="margin-bottom: 1.2rem;">
+      <label for="package" style="font-weight: 300; color: #34495e;">Paquete</label>
+      <p-select id="package" [options]="packages" [(ngModel)]="selectedPackage" placeholder="Selecciona paquete"
+      (onChange)="onPackageChange($event)"
+        optionLabel="label" style="width: 100%; border-radius: 8px; padding: 0.6rem;">
+      </p-select>
+    </div>
+
+    <!-- Total -->
+    <div class="p-field" style="margin-bottom: 1.5rem;">
+      <label for="total" style="font-weight: 500; color: #34495e;">Total (MXN)</label>
+      <input id="total" type="text" pInputText [value]="'MX$' + totalPrice" disabled
+        style="border-radius: 8px; padding: 0.6rem; background: #eef6ff; font-weight: bold; color: #1e6bb8;" />
+    </div>
+
+    <!-- Botón de confirmación -->
+    <div class="p-field mt-3 text-right">
+      <button pButton type="button" label="Confirmar reserva" icon="pi pi-check" (click)="saveReservation()" style="width: 100%; border-radius: 8px; padding: 0.8rem; font-size: 1rem;
+                     background: linear-gradient(135deg, #28a745, #20c997); border: none;">
+      </button>
+    </div>
+
+  </div>
+</p-dialog>

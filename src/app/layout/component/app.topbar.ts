@@ -6,7 +6,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { AppConfigurator } from './app.configurator';
 import { LayoutService } from '../service/layout.service';
 import { ReservationsNotificationComponent } from '../../features/admin/components/notification-component';
-import { Popover, PopoverModule } from 'primeng/popover';
+import { PopoverModule } from 'primeng/popover';
 
 @Component({
     selector: 'app-topbar',

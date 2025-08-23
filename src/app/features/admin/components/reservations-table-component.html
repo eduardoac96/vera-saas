@@ -3,12 +3,18 @@
   <div class="flex items-center justify-between mb-4">
     <div class="font-semibold text-xl">Gestion de Reservas</div>
     <div>
-      <p-button icon="pi pi-plus" label="Reserva Manual" [fluid]="false"></p-button>
+      <p-button icon="pi pi-plus" label="Reserva Manual" [fluid]="false" (click)="showManualDialog = true"> </p-button>
 
-  
      </div>
   </div>
-
+ <!-- parent template -->
+<reservation-dialog
+  [(visible)]="showManualDialog"
+  [property]="selectedProperty"
+  (saved)="onManualReservationSaved($event)">
+</reservation-dialog>
+ 
+  
   <p-table [value]="reservations" [paginator]="true" [rows]="5" responsiveLayout="scroll" sortMode="multiple">
 
     <!-- ENCABEZADO -->
@@ -69,8 +75,8 @@
         <!-- Acciones -->
         <td>
          
-          <button pButton icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-warning"
-            (click)="onEdit(res)"></button>
+          <!-- <button pButton icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-warning"
+            (click)="onEdit(res)"></button> -->
         </td>
       </tr>
     </ng-template>
@@ -78,6 +84,4 @@
   </p-table>
 
 </div>
-
-<app-reservation-view #viewer>
-</app-reservation-view>
+ <!-- <p-toast></p-toast> -->

@@ -1,13 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReservationDto } from '../models/reservation.dto';
-import { PropertyDto } from '../models/property.dto';
-import { UserDto } from '../models/user.dto';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
-import { ReviewDto } from '../models/review.dto';
 import { NotificationDto } from '../models/notification.dto';
-import { mockReservations } from '../mocks/mockReservations';
-import { mockReviews } from '../mocks/mockReviews';
+import { mockReservations } from '../mocks/mockReservations'; 
 import { mockNotifications } from '../mocks/mockNotifications';
 
 @Injectable()
@@ -82,5 +78,17 @@ export class ReservationsService {
       this._reservations.next(arr);
     }
     return of(updated);
+  }
+
+    countClients(propertyId: string) {
+    return this._reservations.pipe(
+      map(properties => {
+          properties
+        
+        // const uniqueClients = new Set(reservations.map(r => r.property?.host.id));
+        // return uniqueClients.size;
+        return 100;
+      })
+    )
   }
 }
