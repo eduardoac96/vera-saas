@@ -71,13 +71,11 @@ export class ReservationsTableComponent {
 selectedReservation: any;
 
 openEdit(reservation: any) {
-  this.selectedReservation = reservation;
+  this.selectedReservation = { ...reservation};
   this.editDialogVisible = true;
 }
 
-updateReservation(updated: any) {
-  // Aquí actualizas en tu array en memoria o envías a la API
-  console.log('Reservación actualizada:', updated);
-  this.editDialogVisible = false;
-}
+ 
+
+
 }

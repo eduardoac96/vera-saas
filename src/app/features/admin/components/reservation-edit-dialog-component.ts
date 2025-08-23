@@ -43,10 +43,13 @@ export class ReservationEditDialogComponent implements OnInit {
   saveReservation() {
     this.onSave.emit(this.editedReservation);
     this.visible = false;
+      this.close();
   }
 
   close() {
     this.onClose.emit();
     this.visible = false;
+    this.editedReservation = null;
   }
+ 
 }
