@@ -13,7 +13,12 @@
   [property]="selectedProperty"
   (saved)="onManualReservationSaved($event)">
 </reservation-dialog>
- 
+ <app-reservation-edit-dialog
+  [visible]="editDialogVisible"
+  [reservation]="selectedReservation"
+  (onSave)="updateReservation($event)"
+  (onClose)="editDialogVisible=false">
+</app-reservation-edit-dialog>
   
   <p-table [value]="reservations" [paginator]="true" [rows]="5" responsiveLayout="scroll" sortMode="multiple">
 
@@ -75,8 +80,8 @@
         <!-- Acciones -->
         <td>
          
-          <!-- <button pButton icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-warning"
-            (click)="onEdit(res)"></button> -->
+          <button pButton icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-warning"
+            (click)="openEdit(res)"></button>
         </td>
       </tr>
     </ng-template>

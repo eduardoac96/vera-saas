@@ -9,11 +9,12 @@ import { ReservationDto } from '../../../core/models/reservation.dto';
 import { ReservationDialogComponent } from "./reservation-dialog-component";
 import { mockProperties } from '../../../core/mocks/mockProperties';
 import { Toast } from "primeng/toast";
+import { ReservationEditDialogComponent } from "./reservation-edit-dialog-component";
 
 @Component({
   standalone: true,
   selector: 'reservations-table-component',
-  imports: [CommonModule, TagModule, TableModule, ButtonModule, RippleModule, ReservationDialogComponent, Toast],
+  imports: [CommonModule, TagModule, TableModule, ButtonModule, RippleModule, ReservationDialogComponent, Toast, ReservationEditDialogComponent],
   templateUrl: './reservations-table-component.html',
   providers: [ReservationsService]
 })
@@ -65,4 +66,18 @@ export class ReservationsTableComponent {
   removeNotifications() {
     console.log("TODO REMOVE")
   }
+
+  editDialogVisible = false;
+selectedReservation: any;
+
+openEdit(reservation: any) {
+  this.selectedReservation = reservation;
+  this.editDialogVisible = true;
+}
+
+updateReservation(updated: any) {
+  // Aquí actualizas en tu array en memoria o envías a la API
+  console.log('Reservación actualizada:', updated);
+  this.editDialogVisible = false;
+}
 }
