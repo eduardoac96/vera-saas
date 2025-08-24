@@ -14,6 +14,8 @@ import { DialogModule } from 'primeng/dialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { MultiSelectModule } from 'primeng/multiselect'; 
 import { InputNumberModule } from 'primeng/inputnumber';
+import { Router } from '@angular/router';
+import { PropertyDataService } from './property-data.service';
  
 
 interface Amenity {
@@ -66,7 +68,7 @@ export class CreatePropertyComponent {
     price: number;
   }[] = [];
 
-  constructor() {
+  constructor(private router: Router, private propertyDataService: PropertyDataService) {
     // Agregar un nivel inicial
     this.addPricingLevel();
     this.filteredAmenities = [...this.allAmenities];
@@ -314,6 +316,27 @@ filterAmenities() {
     
    
   }
-   
+   navigateToPreview() {
+    // Almacenar los datos en el servicio o pasarlos como parámetros
+    // Para este ejemplo, usaremos un servicio compartido
+    this.propertyDataService.setPropertyData(this.getPropertyData());
+    this.router.navigate(['/preview-property']);
+  }
+
+  // Método para obtener todos los datos de la propiedad
+  private getPropertyData(): any {
+    return {
+      propertyName: this.propertyName,
+      shortDescription: this.shortDescription,
+      fullDescription: this.fullDescription,
+      mediaItems: this.mediaItems,
+      amenities: this.amenities,
+      maxGuests: this.maxGuests,
+      bedrooms: this.bedrooms,
+      bathrooms: this.bathrooms,
+      pricingLevels: this.pricingLevels,
+      // ... otras propiedades que quieras incluir
+    };
+  }
 }
 
