@@ -1,5 +1,5 @@
 // create-property.component.ts
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FluidModule } from 'primeng/fluid';
@@ -50,21 +50,27 @@ interface MediaItem {
   templateUrl: './create-property.component.html'
 })
 export class CreatePropertyComponent {
-  // Información básica
-  propertyName: string = '';
-  shortDescription: string = '';
-  fullDescription: string = '';
-  metaKeywords: string = '';
-  slug: string = '';
 
-  // Configuración avanzada
-  maxGuests: number = 10;
-  instantBooking: boolean = false;
-  pricingLevels: {
-    minGuests: number;
+  @Input() data?: 
+  {
+    propertyName: string;
+    shortDescription: string;
+    fullDescription: string;
+    metaKeywords: string;
+    slug: string;
+
+    // Configuración avanzada
     maxGuests: number;
-    price: number;
-  }[] = [];
+    instantBooking: boolean;
+    pricingLevels: {
+      minGuests: number;
+      maxGuests: number;
+      price: number;
+    }[];
+  };
+
+  // Información básica
+
 
   constructor() {
     // Agregar un nivel inicial
@@ -75,10 +81,10 @@ export class CreatePropertyComponent {
 
   // Métodos para precios escalonados
   addPricingLevel() {
-    const lastLevel = this.pricingLevels[this.pricingLevels.length - 1];
+    const lastLevel = this.data?.pricingLevels[this.data?.pricingLevels.length - 1];
     const min = lastLevel ? lastLevel.maxGuests + 1 : 1;
     
-    this.pricingLevels.push({
+    this.data?.pricingLevels.push({
       minGuests: min,
       maxGuests: min,
       price: 1000
@@ -86,10 +92,10 @@ export class CreatePropertyComponent {
   }
 
   removePricingLevel(index: number) {
-    this.pricingLevels.splice(index, 1);
+    this.data?.pricingLevels.splice(index, 1);
     
     // Si se elimina todo, agregar un nivel vacío
-    if (this.pricingLevels.length === 0) {
+    if (this.data?.pricingLevels.length === 0) {
       this.addPricingLevel();
     }
   }
