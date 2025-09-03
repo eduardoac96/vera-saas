@@ -13,8 +13,9 @@ import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { MultiSelectModule } from 'primeng/multiselect'; 
-import { InputNumberModule } from 'primeng/inputnumber';
- 
+import { InputNumberModule } from 'primeng/inputnumber'; 
+import { PropertyDto } from '../../../core/models/property.dto';
+
 
 interface Amenity {
   id: string;
@@ -51,23 +52,8 @@ interface MediaItem {
 })
 export class CreatePropertyComponent {
 
-  @Input() data?: 
-  {
-    propertyName: string;
-    shortDescription: string;
-    fullDescription: string;
-    metaKeywords: string;
-    slug: string;
-
-    // Configuración avanzada
-    maxGuests: number;
-    instantBooking: boolean;
-    pricingLevels: {
-      minGuests: number;
-      maxGuests: number;
-      price: number;
-    }[];
-  };
+  @Input() data: PropertyDto = {} as PropertyDto; 
+   
 
   // Información básica
 
@@ -75,16 +61,17 @@ export class CreatePropertyComponent {
   constructor() {
     // Agregar un nivel inicial
     this.addPricingLevel();
-    this.filteredAmenities = [...this.allAmenities];
-
+    this.filteredAmenities = [...this.allAmenities]; 
   }
 
   // Métodos para precios escalonados
   addPricingLevel() {
-    const lastLevel = this.data?.pricingLevels[this.data?.pricingLevels.length - 1];
+    const lastLevel = this.data && this.data.pricingLevels && this.data.pricingLevels.length > 0
+      ? this.data.pricingLevels[this.data.pricingLevels.length - 1]
+      : null;
     const min = lastLevel ? lastLevel.maxGuests + 1 : 1;
     
-    this.data?.pricingLevels.push({
+    this.data?.pricingLevels?.push({
       minGuests: min,
       maxGuests: min,
       price: 1000
@@ -92,10 +79,10 @@ export class CreatePropertyComponent {
   }
 
   removePricingLevel(index: number) {
-    this.data?.pricingLevels.splice(index, 1);
+    this.data?.pricingLevels?.splice(index, 1);
     
     // Si se elimina todo, agregar un nivel vacío
-    if (this.data?.pricingLevels.length === 0) {
+    if (this.data?.pricingLevels?.length === 0) {
       this.addPricingLevel();
     }
   }

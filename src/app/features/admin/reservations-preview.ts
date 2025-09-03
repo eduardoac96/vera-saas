@@ -1,20 +1,22 @@
 // src/app/component-b.component.ts
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';  
+import { PropertyDto } from '../../core/models/property.dto';
+
 
 type Amenity = { id?: string; name: string; icon?: string };
 type MediaItem = { type: 'image' | 'youtube'; url: string; thumbnail?: string };
 type PricingLevel = { minGuests: number; maxGuests: number; price: number };
 
 @Component({
-  selector: 'app-b',
+  selector: 'reservations-preview',
   standalone: true,
   imports: [CommonModule],
   template: `
     <div class="preview-root">
       <header class="header">
         <div>
-          <h2 class="property-title">{{ data?.propertyName || '—' }}</h2>
+          <h2 class="property-title">{{ data?.title || '—' }}</h2>
           <div class="meta">
             <span class="slug" *ngIf="data?.slug">/{{ data?.slug }}</span>
             <span class="meta-keywords" *ngIf="data?.metaKeywords">· {{ data?.metaKeywords }}</span>
@@ -46,13 +48,13 @@ type PricingLevel = { minGuests: number; maxGuests: number; price: number };
       <section class="two-col">
         <div>
           <h3>Full description</h3>
-          <p class="full-desc">{{ data?.fullDescription || '—' }}</p>
+          <p class="full-desc">{{ data?.description }}</p>
         </div>
 
         <div>
           <h3>Amenities</h3>
-          <div *ngIf="(data?.selectedAmenities || []).length > 0; else noAmenities" class="amenities">
-            <span *ngFor="let a of data!.selectedAmenities" class="badge">{{ a.name }}</span>
+          <div *ngIf="(data?.amenities || []).length > 0; else noAmenities" class="amenities">
+            <span *ngFor="let a of data!.amenities" class="badge">{{ a.name }}</span>
           </div>
           <ng-template #noAmenities>
             <div class="empty">No amenities selected.</div>
@@ -68,7 +70,7 @@ type PricingLevel = { minGuests: number; maxGuests: number; price: number };
         <div class="grid-two">
           <div>
             <div class="muted small">Calendar mode</div>
-            <div>{{ data?.calendarView || 'single' }}</div>
+            <div>{{ 'single' }}</div>
 
             <div class="muted small mt-3">Selected range</div>
             <div *ngIf="data?.rangeDates?.length === 2">
@@ -147,20 +149,8 @@ type PricingLevel = { minGuests: number; maxGuests: number; price: number };
     }
   `]
 })
-export class ComponentB {
-  @Input() data?: {
-    propertyName?: string;
-    slug?: string;
-    shortDescription?: string;
-    fullDescription?: string;
-    metaKeywords?: string;
-    selectedAmenities?: Amenity[];
-    mediaItems?: MediaItem[];
-    calendarView?: 'single'|'range';
-    rangeDates?: Date[];
-    blockedDates?: Date[];
-    pricingLevels?: PricingLevel[];
-  };
+export class ReservationsPreviewComponent {
+  @Input() data?: PropertyDto;
 
   @Output() back = new EventEmitter<void>();
 
@@ -182,8 +172,8 @@ export class ComponentB {
   }
 
   getPriceForExample(guests: number) {
-    const levels = this.data?.pricingLevels || [];
-    const found = levels.find(l => guests >= l.minGuests && guests <= l.maxGuests);
-    return found ? found.price : (levels.length ? levels[0].price : 0);
+    const pricingLevels = this.data?.pricingLevels || [];
+    const found = pricingLevels.find(l => guests >= l.minGuests && guests <= l.maxGuests);
+    return found ? found.price : (pricingLevels.length ? pricingLevels[0].price : 0);
   }
 }

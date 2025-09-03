@@ -1,17 +1,19 @@
 // src/app/app.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';   
-import { ComponentB } from '../reservations-preview';
+import { ReservationsPreviewComponent } from '../reservations-preview';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CreatePropertyComponent } from "./create-property.component";
- 
+import { PropertyDto } from '../../../core/models/property.dto';
+
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, ComponentB, CreatePropertyComponent],
+  imports: [CommonModule, ReservationsPreviewComponent, CreatePropertyComponent],
   template: `
     <main class="page">
-      <h2 class="title">Demo: Component A ↔ Component B (bindings + anim)</h2>
+      <h2 class="title">Demo: Component A ↔ Vista Previa (bindings + anim)</h2>
 
       <div class="card-wrap">
         <!-- Componente A: edit -->
@@ -21,7 +23,7 @@ import { CreatePropertyComponent } from "./create-property.component";
 
         <!-- Componente B: preview -->
         <section *ngIf="!showA" @fade class="card">
-          <app-b [data]="currentData" (back)="handleBack()"></app-b>
+          <reservations-preview [data]="currentData" (back)="handleBack()"></reservations-preview>
         </section>
       </div>
     </main>
@@ -48,9 +50,9 @@ import { CreatePropertyComponent } from "./create-property.component";
 })
 export class ComponentFather {
   showA = true;
-  currentData: { fullName?: string; email?: string; phone?: string } = {};
+  currentData: PropertyDto = {} as PropertyDto;
 
-  handleSubmit(payload: { fullName: string; email: string; phone: string }) {
+  handleSubmit(payload: PropertyDto) {
     // recibimos los valores del componente A y cambiamos a B
     this.currentData = { ...payload };
     this.showA = false;
