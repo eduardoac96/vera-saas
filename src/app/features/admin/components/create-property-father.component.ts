@@ -22,7 +22,7 @@ import { PropertyDto } from '../../../core/models/property.dto';
         </section>
 
         <!-- Componente B: preview -->
-        <section *ngIf="!showA" @fade class="card">
+        <section *ngIf="!showA" @fade class="card"> 
           <reservations-preview [data]="currentData" (back)="handleBack()"></reservations-preview>
         </section>
       </div>
@@ -55,6 +55,7 @@ export class ComponentFather {
   handleSubmit(payload: PropertyDto) {
     // recibimos los valores del componente A y cambiamos a B
     this.currentData = { ...payload };
+ 
     this.showA = false;
   }
 

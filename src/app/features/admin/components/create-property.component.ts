@@ -1,5 +1,5 @@
 // create-property.component.ts
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FluidModule } from 'primeng/fluid';
@@ -53,15 +53,20 @@ interface MediaItem {
 export class CreatePropertyComponent {
 
   @Input() data: PropertyDto = {} as PropertyDto; 
-   
+  @Output() submitValues = new EventEmitter<PropertyDto>();
 
   // Información básica
-
+ 
 
   constructor() {
     // Agregar un nivel inicial
     this.addPricingLevel();
     this.filteredAmenities = [...this.allAmenities]; 
+  }
+  
+  
+  onSubmit() {
+      this.submitValues.emit(this.data); // model es un PropertyDto
   }
 
   // Métodos para precios escalonados
@@ -273,7 +278,7 @@ filterAmenities() {
   onRowDragEnd() {
     this.draggedAmenity = null;
   }
-  
+ 
   onRowDragEnter(event: any, index: number) {
     this.dragTargetIndex = index;
   }
