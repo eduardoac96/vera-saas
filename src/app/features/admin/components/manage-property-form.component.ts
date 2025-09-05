@@ -30,7 +30,7 @@ interface MediaItem {
 }
 
 @Component({
-  selector: 'create-property-component',
+  selector: 'manage-property-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -48,9 +48,9 @@ interface MediaItem {
     DialogModule,
     MultiSelectModule
   ],
-  templateUrl: './create-property.component.html'
+  templateUrl: './manage-property-form.component.html'
 })
-export class CreatePropertyComponent {
+export class ManagePropertyFormComponent {
 
   @Input() data: PropertyDto = {} as PropertyDto; 
   @Output() submitValues = new EventEmitter<PropertyDto>();

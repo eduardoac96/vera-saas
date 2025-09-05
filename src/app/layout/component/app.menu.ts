@@ -41,9 +41,9 @@ export class AppMenu {
                         icon: 'pi pi-fw pi-user',
                         items: [
                             {
-                                label: 'Nueva Propiedad',
+                                label: 'Administrar Propiedad',
                                 icon: 'pi pi-fw pi-plus',
-                                routerLink: ['/create']
+                                routerLink: ['/manage-property']
                             },
                             {
                                 label: 'Panel de Reservas',

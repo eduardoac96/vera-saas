@@ -9,7 +9,7 @@ type MediaItem = { type: 'image' | 'youtube'; url: string; thumbnail?: string };
 type PricingLevel = { minGuests: number; maxGuests: number; price: number };
 
 @Component({
-  selector: 'reservations-preview',
+  selector: 'manage-property-preview',
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -30,7 +30,7 @@ type PricingLevel = { minGuests: number; maxGuests: number; price: number };
       </header>
 
       <section class="gallery">
-        <h3>Gallery</h3>
+        <h3>Galería</h3>
         <div *ngIf="(data?.mediaItems || []).length > 0; else noMedia" class="media-grid">
           <div *ngFor="let m of data!.mediaItems" class="media-item">
             <img *ngIf="m.type === 'image'" [src]="m.url" alt="image" />
@@ -47,17 +47,17 @@ type PricingLevel = { minGuests: number; maxGuests: number; price: number };
 
       <section class="two-col">
         <div>
-          <h3>Full description</h3>
+          <h3>Descripción completa</h3>
           <p class="full-desc">{{ data?.description }}</p>
         </div>
 
         <div>
-          <h3>Amenities</h3>
+          <h3>Amenidades</h3>
           <div *ngIf="(data?.amenities || []).length > 0; else noAmenities" class="amenities">
             <span *ngFor="let a of data!.amenities" class="badge">{{ a.name }}</span>
           </div>
           <ng-template #noAmenities>
-            <div class="empty">No amenities selected.</div>
+            <div class="empty">No amenidades seleccionadas.</div>
           </ng-template>
 
           <h3 class="mt-6">SEO keywords</h3>
@@ -66,10 +66,10 @@ type PricingLevel = { minGuests: number; maxGuests: number; price: number };
       </section>
 
       <section class="availability">
-        <h3>Availability</h3>
+        <h3>Disponibilidad</h3>
         <div class="grid-two">
           <div>
-            <div class="muted small">Calendar mode</div>
+            <div class="muted small">Calendario</div>
             <div>{{ 'single' }}</div>
 
             <div class="muted small mt-3">Selected range</div>
@@ -149,7 +149,7 @@ type PricingLevel = { minGuests: number; maxGuests: number; price: number };
     }
   `]
 })
-export class ReservationsPreviewComponent {
+export class ManagePropertyPreviewComponent {
   @Input() data?: PropertyDto;
 
   @Output() back = new EventEmitter<void>();

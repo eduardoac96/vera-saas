@@ -1,18 +1,16 @@
 import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout'; 
 import { Landing } from './app/features/landing/landing';
- import { CreatePropertyComponent } from './app/features/admin/components/create-property.component';
-import { ReservationsPanelComponent } from './app/features/admin/reservations-panel'; 
-import { ComponentFather } from './app/features/admin/components/create-property-father.component';
- 
+ import { ReservationsPanelComponent } from './app/features/admin/reservations-panel'; 
+import { ManagePropertyComponent } from './app/features/admin/components/manage-property.component';
+  
 export const appRoutes: Routes = [
     {
         path: '',
         component: AppLayout,
         children: [
-            { path: '', component: ReservationsPanelComponent },
-            { path: 'create', component: CreatePropertyComponent},
-            {path: 'father', component: ComponentFather},
+            { path: '', component: ReservationsPanelComponent }, 
+            {path: 'manage-property', component: ManagePropertyComponent},
         ]
     },
     { path: 'landing', component: Landing },

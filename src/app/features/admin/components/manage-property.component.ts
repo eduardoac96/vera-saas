@@ -1,39 +1,35 @@
 // src/app/app.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';   
-import { ReservationsPreviewComponent } from '../reservations-preview';
+import { ManagePropertyPreviewComponent } from '../manage-property-preview.component';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { CreatePropertyComponent } from "./create-property.component";
+import { ManagePropertyFormComponent } from "./manage-property-form.component";
 import { PropertyDto } from '../../../core/models/property.dto';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, ReservationsPreviewComponent, CreatePropertyComponent],
+  imports: [CommonModule, ManagePropertyPreviewComponent, ManagePropertyFormComponent, ManagePropertyPreviewComponent],
   template: `
-    <main class="page">
-      <h2 class="title">Demo: Component A ↔ Vista Previa (bindings + anim)</h2>
-
-      <div class="card-wrap">
+      <div class="card mb-8!">
+      <!-- <div class="card mb-8!"> -->
         <!-- Componente A: edit -->
-        <section *ngIf="showA" @fade class="card">
-          <create-property-component (submitValues)="handleSubmit($event)"></create-property-component>
-        </section>
+        <div *ngIf="showA" @fade class="card">
+          <manage-property-form (submitValues)="handleSubmit($event)"></manage-property-form>
+        </div>
 
         <!-- Componente B: preview -->
-        <section *ngIf="!showA" @fade class="card"> 
-          <reservations-preview [data]="currentData" (back)="handleBack()"></reservations-preview>
-        </section>
+        <div *ngIf="!showA" @fade class="card"> 
+          <manage-property-preview [data]="currentData" (back)="handleBack()"></manage-property-preview>
+        </div>
+      <!-- </div> -->
       </div>
-    </main>
   `
   ,
   styles: [`
     :host { display:block; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding: 2rem; background:#f5f7fb; min-height:100vh; color:#222; }
-    .title { margin:0 0 1rem 0; font-weight:600; color:#1f2937; }
-    .card-wrap { max-width:720px; margin: 1rem auto; }
-    .card { background: #ffffff; border-radius: 12px; box-shadow: 0 6px 22px rgba(16,24,40,0.08); padding: 1.25rem; }
+    .title { margin:0 0 1rem 0; font-weight:600; color:#1f2937; }  
   `]
   ,
   animations: [
@@ -48,7 +44,7 @@ import { PropertyDto } from '../../../core/models/property.dto';
     ])
   ]
 })
-export class ComponentFather {
+export class ManagePropertyComponent {
   showA = true;
   currentData: PropertyDto = {} as PropertyDto;
 

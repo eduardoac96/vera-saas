@@ -8,7 +8,7 @@ import { PropertiesService } from '../../../core/services/properties.service';
 
 @Component({
   standalone: true,
-  selector: 'reservations-stats-component',
+  selector: 'property-stats-component',
   imports: [CommonModule, SelectModule, FormsModule],
   providers: [ReservationsService, PropertiesService],
   templateUrl: 'property-stats-component.html',
