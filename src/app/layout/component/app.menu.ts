@@ -31,11 +31,11 @@ export class AppMenu {
                 icon: 'pi pi-fw pi-briefcase',
                 routerLink: ['/pages'],
                 items: [
-                    {
-                        label: 'Vera Web',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/landing']
-                    },
+                    // {
+                    //     label: 'Vera Web',
+                    //     icon: 'pi pi-fw pi-globe',
+                    //     routerLink: ['/landing']
+                    // },
                     {
                         label: 'Administrador',
                         icon: 'pi pi-fw pi-user',

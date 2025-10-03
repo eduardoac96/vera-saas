@@ -6,34 +6,26 @@
     <div class="form-section">
       <h3 class="section-title">Propiedad</h3>
       <div class="field-group">
-        <div class="input-container">
-          <label for="property" class="input-label">Propiedad</label>
+        <div class="input-container"> 
           <input id="property" type="text" pInputText [value]="property?.title" disabled class="custom-input" />
         </div>
-        
-        <div class="checkbox-container">
-          <p-checkbox inputId="existingUser" [(ngModel)]="isExistingUser" binary="true" class="custom-checkbox"></p-checkbox>
-          <label for="existingUser" class="checkbox-label">¿Es usuario existente?</label>
-        </div>
+         
       </div>
     </div>
 
     <!-- Huésped -->
     <div class="form-section">
       <h3 class="section-title">Huésped</h3>
-      <div class="input-container">
-        <label for="guest" class="input-label">Huésped</label>
-        <p-autoComplete id="guest" [(ngModel)]="selectedGuest" [suggestions]="filteredGuests"
-          (completeMethod)="filterGuests($event)" optionLabel="fullName" placeholder="Busca por nombre"
-          class="custom-autocomplete">
-        </p-autoComplete>
+      <div class="input-container"> 
+        <input id="guest" class="custom-input" type="text" [(ngModel)]="selectedGuest" />
+
       </div>
     </div>
 
     <!-- Fechas -->
     <div class="form-section">
-      <div class="input-container">
-        <label for="checkin" class="input-label">Fechas</label>
+      <h3 class="section-title">Fechas</h3>
+      <div class="input-container"> 
         <p-datepicker id="checkin" [(ngModel)]="checkInDate" dateFormat="dd/mm/yy" selectionMode="range"
           readonlyInput="true" class="custom-datepicker">
         </p-datepicker>
@@ -42,8 +34,8 @@
 
     <!-- Paquete -->
     <div class="form-section">
-      <div class="input-container">
-        <label for="package" class="input-label">Paquete</label>
+    <h3 class="section-title">Paquete</h3>
+      <div class="input-container"> 
         <p-select id="package" [options]="packages" [(ngModel)]="selectedPackage" 
           placeholder="Selecciona paquete" (onChange)="onPackageChange($event)"
           optionLabel="label" class="custom-dropdown">
@@ -53,8 +45,8 @@
 
     <!-- Total -->
     <div class="form-section">
-      <div class="input-container">
-        <label for="total" class="input-label">Total (MXN)</label>
+      <h3 class="section-title">Total (MXN)</h3>
+      <div class="input-container"> 
         <input id="total" type="text" pInputText [value]="'MX$' + totalPrice" disabled class="total-input" />
       </div>
     </div>
